@@ -1,0 +1,20 @@
+{
+  "languages": [
+    "python", "java", "c", "c++", "javascript", "typescript", "rust", "go", "php", "ruby", "swift", "kotlin", "scala"
+  ],
+  "frontend": [
+    "html", "css", "react", "angular", "vue", "next.js", "nuxt", "svelte", "tailwind", "bootstrap", "shadcn", "framer motion", "lucide react", "material ui", "chakra ui", "three.js", "gsap"
+  ],
+  "backend": [
+    "node", "express", "django", "flask", "spring", "fastapi", "laravel", "nest.js", "go-gin", "node.js", "express.js"
+  ],
+  "database": [
+    "mongodb", "mysql", "postgresql", "sqlite", "redis", "firebase", "cassandra", "supabase", "prisma", "mongoose", "sequelize"
+  ],
+  "tools": [
+    "git", "docker", "aws", "github", "linux", "kubernetes", "jenkins", "terraform", "ansible", "nginx", "postman", "axios", "cloudinary", "redux toolkit", "jwt", "bcrypt", "socket.io"
+  ],
+  "programming_languages": [
+    "python", "java", "c", "c++", "javascript", "typescript"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "python": {
+    "extensions": [".py"],
+    "keywords": ["import ", "from "],
+    "files": ["requirements.txt"]
+  },
+  "javascript": {
+    "extensions": [".js"],
+    "keywords": ["require(", "import "],
+    "files": ["package.json"]
+  },
+  "react": {
+    "extensions": [".js", ".jsx", ".tsx"],
+    "keywords": ["react", "useState", "useEffect"],
+    "files": ["package.json"]
+  },
+  "node": {
+    "extensions": [".js"],
+    "keywords": ["express", "http.createServer"],
+    "files": ["package.json"]
+  },
+  "java": {
+    "extensions": [".java"],
+    "keywords": ["public class"],
+    "files": ["pom.xml", "build.gradle"]
+  }
+}

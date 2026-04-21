@@ -1,0 +1,35 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend_Practice",
+  "license": "ISC",
+  "author": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "python": "cd HeartOFProject/resume-skill-extractor && .\\.venv\\Scripts\\python.exe -m uvicorn api:app --host 0.0.0.0 --port 8001 --reload",
+    "python-prod": "cd HeartOFProject/resume-skill-extractor && python3 -m uvicorn api:app --host 0.0.0.0 --port 8001",
+    "start": "concurrently \"node src/server.js\" \"npm run python-prod\"",
+    "render-postinstall": "npm install && cd HeartOFProject/resume-skill-extractor && pip install -r requirements.txt && python3 -m spacy download en_core_web_sm"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "axios": "^1.14.0",
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.9.0",
+    "concurrently": "^9.2.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.3.0",
+    "mongoose-aggregate-paginate-v2": "^1.1.4",
+    "multer": "^2.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14",
+    "prettier": "^3.8.1"
+  }
+}
