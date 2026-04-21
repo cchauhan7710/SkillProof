@@ -6,14 +6,22 @@ const app = express()
 
 app.use(cors({
     origin: (origin, callback) => {
-        const allowedOrigins = process.env.FRONTEND_URL === "*" 
+        // Strip trailing slashes from the env variable for safe matching
+        const rawUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+        const allowedOrigins = rawUrl === "*" 
             ? "*" 
-            : process.env.FRONTEND_URL?.split(",");
+            : rawUrl.split(",").map(url => url.replace(/\/+$/, ""));
         
-        // Allow requests with no origin (like mobile apps or curl)
-        if (!origin || allowedOrigins === "*" || allowedOrigins?.includes(origin)) {
+        // Allow requests with no origin (like mobile apps/postman)
+        if (!origin) return callback(null, true);
+
+        // Strip trailing slash from incoming origin just in case
+        const safeOrigin = origin.replace(/\/+$/, "");
+
+        if (allowedOrigins === "*" || allowedOrigins.includes(safeOrigin)) {
             callback(null, true);
         } else {
+            console.error(`🚨 CORS Blocked Request from Origin: ${origin}`);
             callback(new Error(`Origin ${origin} not allowed by CORS`));
         }
     },
