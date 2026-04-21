@@ -135,9 +135,10 @@ const { accessToken , refreshToken } =  await generateAccessAndRefreshToken(user
 const loggedInUsser = await User.findById(user._id).select("-password -refreshToken")//optional 
 
 //cookies send 
-const option  = {
-  httpOnly:true,
-  secure:true
+const option = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
 }
 
 
@@ -172,9 +173,10 @@ await User.findByIdAndUpdate(
   }
 )
 
-  const option  = {
-    httpOnly:true,
-    secure:true 
+  const option = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
   }
   return res
   .status(200)
@@ -213,8 +215,9 @@ await User.findByIdAndUpdate(
   }
  
   const option = {
-   httpOnly:true,
-   secure:true
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
   }
  
  const {accessToken,newRefreshToken} =  await generateAccessAndRefreshToken(user._id);
