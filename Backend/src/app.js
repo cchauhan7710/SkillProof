@@ -11,9 +11,14 @@ app.use(cors({
         const allowedOrigins = rawUrl === "*" 
             ? "*" 
             : rawUrl.split(",").map(url => url.replace(/\/+$/, ""));
+            
+        const backendUrl = (process.env.BACKEND_URL || "http://localhost:8000").replace(/\/+$/, "");
+        if (allowedOrigins !== "*" && !allowedOrigins.includes(backendUrl)) {
+            allowedOrigins.push(backendUrl);
+        }
         
-        // Allow requests with no origin (like mobile apps/postman)
-        if (!origin) return callback(null, true);
+        // Allow requests with no origin (like mobile apps/postman) or null origin (file:// protocols)
+        if (!origin || origin === "null") return callback(null, true);
 
         // Strip trailing slash from incoming origin just in case
         const safeOrigin = origin.replace(/\/+$/, "");
@@ -21,8 +26,10 @@ app.use(cors({
         if (allowedOrigins === "*" || allowedOrigins.includes(safeOrigin)) {
             callback(null, true);
         } else {
-            console.error(`🚨 CORS Blocked Request from Origin: ${origin}`);
-            callback(new Error(`Origin ${origin} not allowed by CORS`));
+            console.warn(`🚨 CORS Warning: Unrecognized Origin: ${origin}`);
+            // Passing false prevents CORS headers from being set, letting the browser block it properly
+            // rather than throwing a 500 Internal Server Error.
+            callback(null, false);
         }
     },
     credentials: true
