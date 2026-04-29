@@ -9,23 +9,30 @@ import { processResumeAnalysis } from '../services/resumeAnalysis.service.js';
 // @route   POST /api/v1/resume-analysis
 // @access  Private  (multer.single('resume') applied in route)
 const createResumeAnalysis = asyncHandler(async (req, res) => {
-    // Multer puts the saved file info on req.file
+    console.log('[Controller] POST /resume-analysis hit');
+    console.log('[Controller] req.file:', req.file ? `name=${req.file.originalname}, size=${req.file.size}, hasBuffer=${!!req.file.buffer}` : 'UNDEFINED');
+    console.log('[Controller] req.user:', req.user ? req.user._id : 'UNDEFINED');
+
     if (!req.file || !req.file.buffer) {
+        console.error('[Controller] ERROR: No file or buffer on req.file');
         throw new apiError(400, 'Resume file is required (PDF or DOCX).');
     }
 
     const githubUsername = req.body.github_username || null;
+    console.log('[Controller] githubUsername:', githubUsername);
 
-    // Create DB document immediately so frontend gets an ID to poll
-    const resumeAnalysis = await ResumeAnalysis.create({
-        user:          req.user._id,
-        resumeFileUrl: req.file.originalname, // store filename; no Cloudinary needed
-        githubUsername,
-        status:        'processing'
-    });
-
-    if (!resumeAnalysis) {
-        throw new apiError(500, 'Failed to create analysis document.');
+    let resumeAnalysis;
+    try {
+        resumeAnalysis = await ResumeAnalysis.create({
+            user:          req.user._id,
+            resumeFileUrl: req.file.originalname,
+            githubUsername,
+            status:        'processing'
+        });
+        console.log('[Controller] DB document created:', resumeAnalysis._id);
+    } catch (dbErr) {
+        console.error('[Controller] DB CREATE ERROR:', dbErr.message);
+        throw new apiError(500, `DB Error: ${dbErr.message}`);
     }
 
     // Kick off background processing — do NOT await (fire and forget)
