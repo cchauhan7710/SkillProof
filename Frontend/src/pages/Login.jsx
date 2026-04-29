@@ -82,7 +82,7 @@ export const Login = () => {
                   </label>
                   <Input
                     type="text"
-                    placeholder="identity@v1.link"
+                    placeholder="john@example.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
