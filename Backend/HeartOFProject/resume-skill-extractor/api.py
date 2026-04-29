@@ -1,8 +1,8 @@
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-import shutil
 import os
 import re
+import tempfile
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -50,8 +50,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-UPLOAD_DIR = "uploads"
-os.makedirs(UPLOAD_DIR, exist_ok=True)
+
 
 
 @app.get("/health")
@@ -64,21 +63,25 @@ async def analyze_resume(
     resume: UploadFile = File(...),
     github_username: str = Form(None)
 ):
-    # ---------------- Save Resume ----------------
+    # ---------------- Save Resume to temp file ----------------
     print(f"\nDEBUG: [API] Received analysis request for github_username: '{github_username}'")
     token = os.getenv("GITHUB_TOKEN")
     print(f"DEBUG: [API] GITHUB_TOKEN status: {'LOADED' if token else 'MISSING'}")
-    
-    resume_path = os.path.join(UPLOAD_DIR, resume.filename)
-    with open(resume_path, "wb") as buffer:
-        shutil.copyfileobj(resume.file, buffer)
+
+    suffix = os.path.splitext(resume.filename)[1]  # .pdf or .docx
+    with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+        contents = await resume.read()
+        tmp.write(contents)
+        resume_path = tmp.name
 
     # ---------------- Resume Processing ----------------
-    raw_text     = extract_text(resume_path)
-    """
-    Simple regex-based extraction for Name, Email, and Phone.
-    """
-    cleaned_text = clean_text(raw_text)
+    try:
+        raw_text = extract_text(resume_path)
+        cleaned_text = clean_text(raw_text)
+    finally:
+        # Always clean up temp file
+        if os.path.exists(resume_path):
+            os.unlink(resume_path)
 
     # If no username was passed, look for one inside the resume text.
     if github_username:
