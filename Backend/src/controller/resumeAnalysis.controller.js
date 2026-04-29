@@ -10,11 +10,10 @@ import { processResumeAnalysis } from '../services/resumeAnalysis.service.js';
 // @access  Private  (multer.single('resume') applied in route)
 const createResumeAnalysis = asyncHandler(async (req, res) => {
     // Multer puts the saved file info on req.file
-    if (!req.file || !req.file.path) {
+    if (!req.file || !req.file.buffer) {
         throw new apiError(400, 'Resume file is required (PDF or DOCX).');
     }
 
-    const localFilePath  = path.resolve(req.file.path);   // absolute path on disk
     const githubUsername = req.body.github_username || null;
 
     // Create DB document immediately so frontend gets an ID to poll
@@ -30,7 +29,7 @@ const createResumeAnalysis = asyncHandler(async (req, res) => {
     }
 
     // Kick off background processing — do NOT await (fire and forget)
-    processResumeAnalysis(resumeAnalysis._id, localFilePath, githubUsername)
+    processResumeAnalysis(resumeAnalysis._id, req.file, githubUsername)
         .catch(err => console.error('[Controller] Background pipeline error:', err.message));
 
     return res

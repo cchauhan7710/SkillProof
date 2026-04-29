@@ -12,10 +12,13 @@ const PYTHON_NLP_URL = process.env.PYTHON_NLP_URL || 'http://localhost:8001';
  * @param {string|null} githubUsername - Optional GitHub username for verification.
  * @returns {Promise<Object>}           Raw JSON response from Python API.
  */
-export const callPythonNLP = async (localFilePath, githubUsername = null) => {
+export const callPythonNLP = async (fileObj, githubUsername = null) => {
     try {
         const form = new FormData();
-        form.append('resume', fs.createReadStream(localFilePath));
+        form.append('resume', fileObj.buffer, {
+            filename: fileObj.originalname,
+            contentType: fileObj.mimetype,
+        });
         if (githubUsername) {
             form.append('github_username', githubUsername);
         }
