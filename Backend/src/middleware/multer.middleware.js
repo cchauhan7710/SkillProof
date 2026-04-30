@@ -5,7 +5,8 @@ import { fileURLToPath } from 'url';
 
 // Resolve absolute path to public/temp (works regardless of CWD on Render)
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const TEMP_DIR = path.resolve(__dirname, '../../public/temp');
+const TEMP_DIR = process.env.UPLOAD_TEMP_DIR
+  ?? path.resolve(__dirname, '../../public/temp');
 
 // Auto-create the temp directory if it doesn't exist (critical for Render deploys)
 if (!fs.existsSync(TEMP_DIR)) {
