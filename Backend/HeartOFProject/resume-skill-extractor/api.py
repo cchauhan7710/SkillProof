@@ -107,10 +107,7 @@ async def analyze_resume(
             print(f"DEBUG: [API] Extracted GitHub username from resume: '{github_username}'")
 
     if not github_username:
-        raise HTTPException(
-            status_code=400,
-            detail='GitHub profile not found in resume. Please include a GitHub link or enter your GitHub username.'
-        )
+        print("DEBUG: [API] No GitHub username found — skipping GitHub verification. Analysis will continue with resume data only.")
 
     # extract_skills_and_confidence returns {skill: confidence_level}
     skill_confidence = extract_skills_and_confidence(cleaned_text)
