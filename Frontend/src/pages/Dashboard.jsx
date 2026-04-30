@@ -458,13 +458,17 @@ const DeleteConfirmModal = ({ isOpen, onClose, onConfirm, isDeleting }) => {
             onClick={onClose}
             aria-hidden="true"
           />
-          <div className="fixed inset-0 z-[90] grid place-items-center p-4 pointer-events-none">
-            <motion.div
+          <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="w-full max-w-sm bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-slate-200 dark:border-white/[0.08] p-6 sm:p-8 pointer-events-auto relative overflow-hidden"
+              className="fixed z-[90] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+                         w-[calc(100vw-2rem)] max-w-sm
+                         bg-white dark:bg-[#0a0a0a] rounded-3xl
+                         shadow-[0_20px_50px_rgba(0,0,0,0.3)]
+                         border border-slate-200 dark:border-white/[0.08]
+                         p-6 sm:p-8 pointer-events-auto relative overflow-hidden"
               onClick={e => e.stopPropagation()}
             >
                <div className="absolute -top-24 -right-24 w-48 h-48 bg-red-500/20 rounded-full blur-3xl opacity-50 pointer-events-none" />
@@ -502,7 +506,7 @@ const DeleteConfirmModal = ({ isOpen, onClose, onConfirm, isDeleting }) => {
                   </div>
                </div>
             </motion.div>
-          </div>
+
         </>
       )}
     </AnimatePresence>
