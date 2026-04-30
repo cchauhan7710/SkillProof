@@ -273,7 +273,6 @@ const DetailPanel = ({ analysis, onClose, onDelete }) => {
             <button
               onClick={() => {
                 onDelete(analysis._id);
-                onClose();
               }}
               className="w-full sm:w-auto flex items-center justify-center gap-2 bg-red-500/10 text-red-500 hover:bg-red-500/20 px-6 py-3 rounded-lg font-bold text-sm transition-colors border border-red-500/20">
               <Trash2 size={16} /> Delete
@@ -549,13 +548,14 @@ export const Dashboard = () => {
       await api.delete(`/resume-analysis/${auditToDelete}`);
       setAnalyses(prev => prev.filter(a => a._id !== auditToDelete));
       setAuditToDelete(null);
-      if (selected?._id === auditToDelete) setSelected(null);
+      setSelected(null); // always close the detail panel after deletion
     } catch (err) {
       console.error('[Dashboard] Error deleting audit:', err);
     } finally {
       setIsDeleting(false);
     }
   };
+
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
