@@ -7,24 +7,76 @@ def verify_skills(skills, repos, github_username=None):
         return {}
 
     # Bridge between Frameworks/Tools and Languages
+    # GitHub detects base languages (JavaScript, Python, etc.), not frameworks.
+    # This map lets us credit frameworks when their base language is found in repos.
     TECH_ASSOCIATION = {
-        "react": ["javascript", "typescript"],
-        "node": ["javascript"],
-        "node.js": ["javascript"],
-        "express": ["javascript"],
-        "express.js": ["javascript"],
-        "next.js": ["javascript", "typescript"],
-        "vue": ["javascript"],
-        "angular": ["typescript", "javascript"],
-        "django": ["python"],
-        "flask": ["python"],
-        "fastapi": ["python"],
-        "spring": ["java"],
-        "laravel": ["php"],
-        "mongodb": ["javascript"], # Mongoose/Drivers often count as JS
-        "tailwind": ["css", "html"],
-        "bootstrap": ["css", "html"]
+        # JavaScript / TypeScript ecosystem
+        "react":            ["javascript", "typescript", "jsx", "tsx"],
+        "react.js":         ["javascript", "typescript"],
+        "react native":     ["javascript", "typescript"],
+        "reactnative":      ["javascript", "typescript"],
+        "expo":             ["javascript", "typescript"],
+        "node":             ["javascript"],
+        "node.js":          ["javascript"],
+        "express":          ["javascript"],
+        "express.js":       ["javascript"],
+        "next.js":          ["javascript", "typescript"],
+        "nextjs":           ["javascript", "typescript"],
+        "redux":            ["javascript", "typescript"],
+        "redux toolkit":    ["javascript", "typescript"],
+        "vue":              ["javascript", "typescript"],
+        "vue.js":           ["javascript", "typescript"],
+        "angular":          ["typescript", "javascript"],
+        "svelte":           ["javascript", "typescript"],
+        "nuxt":             ["javascript", "typescript"],
+        "gatsby":           ["javascript", "typescript"],
+
+        # CSS / Styling
+        "tailwind":         ["css", "html", "javascript"],
+        "tailwind css":     ["css", "html", "javascript"],
+        "bootstrap":        ["css", "html"],
+        "sass":             ["css"],
+        "scss":             ["css"],
+
+        # Python frameworks
+        "django":           ["python"],
+        "flask":            ["python"],
+        "fastapi":          ["python"],
+        "celery":           ["python"],
+        "pandas":           ["python", "jupyter notebook"],
+        "numpy":            ["python"],
+        "scikit":           ["python"],
+        "tensorflow":       ["python"],
+        "pytorch":          ["python"],
+
+        # Java / JVM
+        "spring":           ["java", "kotlin"],
+        "spring boot":      ["java", "kotlin"],
+        "hibernate":        ["java"],
+        "kotlin":           ["kotlin", "java"],
+
+        # PHP
+        "laravel":          ["php"],
+        "symfony":          ["php"],
+
+        # Databases (detected as language in some repos, otherwise match by name)
+        "mongodb":          ["javascript", "typescript"],
+        "mongoose":         ["javascript", "typescript"],
+        "postgresql":       ["plpgsql", "sql", "python", "javascript"],
+        "postgres":         ["plpgsql", "sql", "python", "javascript"],
+        "mysql":            ["sql", "python", "javascript", "php"],
+        "sqlite":           ["sql", "python"],
+        "redis":            ["python", "javascript"],
+        "firebase":         ["javascript", "typescript"],
+
+        # DevOps / Tools
+        "docker":           ["dockerfile", "shell", "python"],
+        "kubernetes":       ["yaml", "shell"],
+        "graphql":          ["javascript", "typescript", "python"],
+        "jwt":              ["javascript", "typescript", "python"],
+        "cloudinary":       ["javascript", "typescript", "python"],
     }
+
 
     results = {}
     for skill in skills:
