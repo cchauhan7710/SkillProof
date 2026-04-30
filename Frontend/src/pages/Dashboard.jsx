@@ -459,51 +459,52 @@ const DeleteConfirmModal = ({ isOpen, onClose, onConfirm, isDeleting }) => {
             onClick={onClose}
           />
 
-          {/* compact popup card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.92, y: -8 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.92, y: -8 }}
-            transition={{ type: "spring", stiffness: 400, damping: 32 }}
-            style={{ top: '50vh', transform: 'translate(-50%, -50%)' }}
-            className="fixed left-1/2 z-[90]
-                       w-[min(340px,calc(100vw-2rem))]
-                       bg-white dark:bg-[#111] rounded-2xl
-                       shadow-[0_8px_32px_rgba(0,0,0,0.22)]
-                       border border-slate-200 dark:border-white/10
-                       p-6 pointer-events-auto"
-            onClick={e => e.stopPropagation()}
-          >
-            {/* icon */}
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-9 h-9 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500 shrink-0">
-                <Trash2 size={16} />
+          {/* compact popup card — centered via wrapper, animated via motion.div */}
+          <div className="fixed inset-0 z-[90] flex items-center justify-center pointer-events-none">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.90 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.90 }}
+              transition={{ type: "spring", stiffness: 400, damping: 32 }}
+              className="w-[min(340px,calc(100vw-2rem))]
+                         bg-white dark:bg-[#111] rounded-2xl
+                         shadow-[0_8px_32px_rgba(0,0,0,0.28)]
+                         border border-slate-200 dark:border-white/10
+                         p-6 pointer-events-auto"
+              onClick={e => e.stopPropagation()}
+            >
+              {/* icon + text */}
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-9 h-9 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500 shrink-0">
+                  <Trash2 size={16} />
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-slate-900 dark:text-white">Delete Audit?</p>
+                  <p className="text-xs text-slate-400 dark:text-white/40">This action cannot be undone.</p>
+                </div>
               </div>
-              <div>
-                <p className="text-sm font-bold text-slate-900 dark:text-white">Delete Audit?</p>
-                <p className="text-xs text-slate-400 dark:text-white/40">This action cannot be undone.</p>
-              </div>
-            </div>
 
-            {/* actions */}
-            <div className="flex gap-2 mt-2">
-              <button
-                onClick={onClose}
-                disabled={isDeleting}
-                className="flex-1 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-white/60 font-semibold text-sm hover:bg-slate-200 dark:hover:bg-white/10 transition-colors disabled:opacity-50"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={onConfirm}
-                disabled={isDeleting}
-                className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white font-semibold text-sm transition-colors disabled:opacity-70 shadow-md shadow-red-500/20"
-              >
-                {isDeleting ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
-                {isDeleting ? 'Deleting…' : 'Delete'}
-              </button>
-            </div>
-          </motion.div>
+              {/* actions */}
+              <div className="flex gap-2">
+                <button
+                  onClick={onClose}
+                  disabled={isDeleting}
+                  className="flex-1 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-white/60 font-semibold text-sm hover:bg-slate-200 dark:hover:bg-white/10 transition-colors disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={onConfirm}
+                  disabled={isDeleting}
+                  className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white font-semibold text-sm transition-colors disabled:opacity-70 shadow-md shadow-red-500/20"
+                >
+                  {isDeleting ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
+                  {isDeleting ? 'Deleting…' : 'Delete'}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+
         </>
       )}
     </AnimatePresence>
