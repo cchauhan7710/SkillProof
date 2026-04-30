@@ -446,72 +446,71 @@ AI Audit System`;
   );
 };
 
-/* ─────────────────────────────── premium delete modal ─────────────────── */
+/* ─────────────────────────────── delete popup ─────────────────── */
 const DeleteConfirmModal = ({ isOpen, onClose, onConfirm, isDeleting }) => {
   return (
     <AnimatePresence>
       {isOpen && (
         <>
+          {/* subtle backdrop — doesn't feel full-screen */}
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-slate-900/60 dark:bg-black/60 backdrop-blur-sm z-[80]"
+            className="fixed inset-0 bg-black/30 z-[80]"
             onClick={onClose}
-            aria-hidden="true"
           />
-          <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed z-[90] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-                         w-[calc(100vw-2rem)] max-w-sm
-                         bg-white dark:bg-[#0a0a0a] rounded-3xl
-                         shadow-[0_20px_50px_rgba(0,0,0,0.3)]
-                         border border-slate-200 dark:border-white/[0.08]
-                         p-6 sm:p-8 pointer-events-auto relative overflow-hidden"
-              onClick={e => e.stopPropagation()}
-            >
-               <div className="absolute -top-24 -right-24 w-48 h-48 bg-red-500/20 rounded-full blur-3xl opacity-50 pointer-events-none" />
-               
-               <div className="flex flex-col items-center text-center relative z-10">
-                  <div className="w-14 h-14 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center mb-5 text-red-500 shadow-[0_0_15px_rgba(239,68,68,0.15)] relative">
-                    <motion.div
-                      animate={{ scale: [1, 1.2, 1] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                      className="absolute inset-0 rounded-full border border-red-500/30"
-                    />
-                    <AlertTriangle size={24} />
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 tracking-tight">Erase Audit Data</h3>
-                  <p className="text-sm text-slate-500 dark:text-white/50 mb-8 leading-relaxed">
-                    This action is permanent. All forensic data and extracted competencies will be destroyed. Are you sure you want to proceed?
-                  </p>
-                  
-                  <div className="flex w-full gap-3">
-                    <button 
-                      onClick={onClose}
-                      disabled={isDeleting}
-                      className="flex-1 px-4 py-3 rounded-xl bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-white/80 font-bold text-sm hover:bg-slate-200 dark:hover:bg-white/10 transition-colors disabled:opacity-50"
-                    >
-                      Cancel
-                    </button>
-                    <button 
-                      onClick={onConfirm}
-                      disabled={isDeleting}
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-red-500 hover:bg-red-600 text-white font-bold text-sm shadow-lg shadow-red-500/20 transition-all disabled:opacity-70"
-                    >
-                      {isDeleting ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
-                      {isDeleting ? 'Erasing...' : 'Confirm'}
-                    </button>
-                  </div>
-               </div>
-            </motion.div>
 
+          {/* compact popup card */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92, y: -8 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.92, y: -8 }}
+            transition={{ type: "spring", stiffness: 400, damping: 32 }}
+            style={{ top: '50vh', transform: 'translate(-50%, -50%)' }}
+            className="fixed left-1/2 z-[90]
+                       w-[min(340px,calc(100vw-2rem))]
+                       bg-white dark:bg-[#111] rounded-2xl
+                       shadow-[0_8px_32px_rgba(0,0,0,0.22)]
+                       border border-slate-200 dark:border-white/10
+                       p-6 pointer-events-auto"
+            onClick={e => e.stopPropagation()}
+          >
+            {/* icon */}
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-9 h-9 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500 shrink-0">
+                <Trash2 size={16} />
+              </div>
+              <div>
+                <p className="text-sm font-bold text-slate-900 dark:text-white">Delete Audit?</p>
+                <p className="text-xs text-slate-400 dark:text-white/40">This action cannot be undone.</p>
+              </div>
+            </div>
+
+            {/* actions */}
+            <div className="flex gap-2 mt-2">
+              <button
+                onClick={onClose}
+                disabled={isDeleting}
+                className="flex-1 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-white/60 font-semibold text-sm hover:bg-slate-200 dark:hover:bg-white/10 transition-colors disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={onConfirm}
+                disabled={isDeleting}
+                className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white font-semibold text-sm transition-colors disabled:opacity-70 shadow-md shadow-red-500/20"
+              >
+                {isDeleting ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
+                {isDeleting ? 'Deleting…' : 'Delete'}
+              </button>
+            </div>
+          </motion.div>
         </>
       )}
     </AnimatePresence>
   );
 };
+
+
 
 /* ─────────────────────────────── main dashboard ─────────────────── */
 export const Dashboard = () => {
