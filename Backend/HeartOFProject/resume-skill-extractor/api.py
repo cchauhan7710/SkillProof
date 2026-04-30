@@ -25,22 +25,40 @@ print(">>> PORT: 8001 | AUTH: LOADED <<<")
 print("="*40 + "\n")
 
 
+# Common false positives that are NOT GitHub usernames
+_GITHUB_USERNAME_BLOCKLIST = {
+    "profile", "username", "user", "github", "account", "leetcode",
+    "linkedin", "twitter", "portfolio", "website", "link", "here",
+    "click", "view", "visit", "your", "my", "the", "this"
+}
+
 def extract_github_username_from_text(text: str):
     if not text:
         return None
 
-    patterns = [
-        r"github\.com/([A-Za-z0-9-]+)(?:/[A-Za-z0-9_.-]+)?",
-        r"GitHub\s*[:\-]?\s*([A-Za-z0-9-]+)",
-        r"@([A-Za-z0-9-]+)"
-    ]
+    # Priority 1: Full github.com URL — most reliable
+    url_match = re.search(
+        r"github\.com/([A-Za-z0-9][A-Za-z0-9-]{0,38})(?:/|$|\s|\")",
+        text, re.IGNORECASE
+    )
+    if url_match:
+        username = url_match.group(1).strip().rstrip('/')
+        if username.lower() not in _GITHUB_USERNAME_BLOCKLIST and len(username) >= 2:
+            print(f"DEBUG: [GitHub Extractor] Found via URL pattern: '{username}'")
+            return username
 
-    for pattern in patterns:
-        match = re.search(pattern, text, re.IGNORECASE)
-        if match:
-            username = match.group(1).strip()
-            if username and '/' not in username:
-                return username
+    # Priority 2: "GitHub:" label — only accept if it looks like a real handle
+    label_match = re.search(
+        r"github\s*[:\-]\s*([A-Za-z0-9][A-Za-z0-9-]{1,38})",
+        text, re.IGNORECASE
+    )
+    if label_match:
+        username = label_match.group(1).strip()
+        if username.lower() not in _GITHUB_USERNAME_BLOCKLIST and len(username) >= 3:
+            print(f"DEBUG: [GitHub Extractor] Found via label pattern: '{username}'")
+            return username
+
+    print("DEBUG: [GitHub Extractor] No valid GitHub username found in resume text.")
     return None
 
 app.add_middleware(
