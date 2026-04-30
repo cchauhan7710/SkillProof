@@ -88,14 +88,14 @@ const mapPythonResponseToSchema = (pyData) => {
  * @param {string} localFilePath   - Absolute local path to the uploaded resume file.
  * @param {string|null} githubUsername
  */
-export const processResumeAnalysis = async (analysisId, fileObj, githubUsername = null) => {
+export const processResumeAnalysis = async (analysisId, localFilePath, githubUsername = null) => {
     try {
         console.log(`\n[Pipeline] 🚀 Starting analysis ${analysisId}`);
-        console.log(`[Pipeline] File: ${fileObj.originalname} | GitHub: ${githubUsername || 'none'}`);
+        console.log(`[Pipeline] File: ${localFilePath} | GitHub: ${githubUsername || 'none'}`);
 
         // ── Call Python NLP ──────────────────────────────────────────────
         console.log('[Pipeline] → Sending to Python FastAPI /analyze-resume …');
-        const pyData = await callPythonNLP(fileObj, githubUsername);
+        const pyData = await callPythonNLP(localFilePath, githubUsername);
         console.log('[Pipeline] ← Python responded. Mapping to schema…');
 
         // ── Map & Persist ────────────────────────────────────────────────
@@ -125,5 +125,12 @@ export const processResumeAnalysis = async (analysisId, fileObj, githubUsername 
         }
         console.error(`[Pipeline] ❌ Error for ${analysisId}:`, errorMsg, '\nFull Error:', error);
         await ResumeAnalysis.findByIdAndUpdate(analysisId, { status: 'failed', failureReason: errorMsg });
+
+    } finally {
+        // Clean up temp file regardless of success or failure
+        if (localFilePath && fs.existsSync(localFilePath)) {
+            fs.unlinkSync(localFilePath);
+            console.log('[Pipeline] Temp file cleaned up.');
+        }
     }
 };

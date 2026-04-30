@@ -67,10 +67,9 @@ app.use("/api/public/v1",          publicApiRouter)  // external integrations
 
 // ── global error handler ───────────────────────────────────────────────
 app.use((err, req, res, next) => {
-    console.error("Global Error:", err);
     const status  = err.statusCode || 500;
     const message = err.message    || "Internal Server Error";
-    return res.status(status).json({ success: false, statusCode: status, message, stack: err.stack });
+    return res.status(status).json({ success: false, statusCode: status, message });
 });
 
 export default app;

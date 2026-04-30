@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Navbar } from '../components/layout/Navbar';
 import { Button, Card, Input } from '../components/ui';
@@ -14,18 +14,40 @@ import {
   Activity, 
   Target,
   Plus,
-  Github
+  Github,
+  Lock
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 
 export const Upload = () => {
+  const { user, loading: authLoading } = useAuth();
   const [file, setFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [githubUrl, setGithubUrl] = useState(''); // Now an optional manual override
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
+
+  // Redirect to login if not authenticated (after auth check completes)
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate('/login', { replace: true, state: { from: '/upload' } });
+    }
+  }, [user, authLoading, navigate]);
+
+  // Show spinner while auth state is being determined
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-slate-50 dark:bg-[#000000] flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-primary-500 animate-spin" />
+      </div>
+    );
+  }
+
+  // Show nothing while redirect is in-flight
+  if (!user) return null;
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
