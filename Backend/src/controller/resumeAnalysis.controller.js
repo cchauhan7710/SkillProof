@@ -9,18 +9,22 @@ import { processResumeAnalysis } from '../services/resumeAnalysis.service.js';
 // @route   POST /api/v1/resume-analysis
 // @access  Private  (multer.single('resume') applied in route)
 const createResumeAnalysis = asyncHandler(async (req, res) => {
+    console.log('[Upload] Step 1: Handler entered. req.file =', req.file ? `{ path: "${req.file.path}", size: ${req.file.size} }` : 'MISSING');
+
     // Multer puts the saved file info on req.file
     if (!req.file || !req.file.path) {
         throw new apiError(400, 'Resume file is required (PDF or DOCX).');
     }
 
-    const localFilePath  = path.resolve(req.file.path);   // absolute path on disk
+    const localFilePath  = path.resolve(req.file.path);
     const githubUsername = req.body.github_username || null;
+    console.log('[Upload] Step 2: File resolved →', localFilePath, '| GitHub:', githubUsername || 'none');
 
     // Create DB document immediately so frontend gets an ID to poll
+    console.log('[Upload] Step 3: Creating DB document…');
     const resumeAnalysis = await ResumeAnalysis.create({
         user:          req.user._id,
-        resumeFileUrl: req.file.originalname, // store filename; no Cloudinary needed
+        resumeFileUrl: req.file.originalname,
         githubUsername,
         status:        'processing'
     });
@@ -28,6 +32,7 @@ const createResumeAnalysis = asyncHandler(async (req, res) => {
     if (!resumeAnalysis) {
         throw new apiError(500, 'Failed to create analysis document.');
     }
+    console.log('[Upload] Step 4: DB document created →', resumeAnalysis._id.toString());
 
     // Kick off background processing — do NOT await (fire and forget)
     processResumeAnalysis(resumeAnalysis._id, localFilePath, githubUsername)
@@ -35,10 +40,12 @@ const createResumeAnalysis = asyncHandler(async (req, res) => {
             console.error('[Controller] Background pipeline error:', err.message);
         });
 
+    console.log('[Upload] Step 5: Sending 201 response.');
     return res
         .status(201)
         .json(new ApiResponse(201, resumeAnalysis, 'Analysis started. Poll /:id for results.'));
 });
+
 
 // @desc    Get all analyses for logged-in user
 // @route   GET /api/v1/resume-analysis
