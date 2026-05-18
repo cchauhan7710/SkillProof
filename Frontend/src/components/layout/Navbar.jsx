@@ -88,7 +88,7 @@ export const Navbar = () => {
                 <Link to="/profile" className="flex items-center space-x-3 group cursor-pointer">
                   <div className="w-8 h-8 rounded-full border border-slate-300 dark:border-white/10 p-0.5 overflow-hidden group-hover:border-slate-400 dark:group-hover:border-white/20 transition-colors">
                      {user.avatar ? (
-                        <img src={user.avatar} alt="avatar" className="w-full h-full object-cover rounded-full" />
+                        <img src={user.avatar?.replace('http://', 'https://')} alt="avatar" className="w-full h-full object-cover rounded-full" />
                      ) : (
                         <div className="w-full h-full bg-slate-200 dark:bg-white/5 flex items-center justify-center text-slate-400 dark:text-white/20"><User size={14} /></div>
                      )}

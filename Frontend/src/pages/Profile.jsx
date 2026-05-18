@@ -134,7 +134,7 @@ export const Profile = () => {
               <div className="relative group mb-6">
                 <div className="w-32 h-32 rounded-full border-2 border-slate-200 dark:border-white/10 p-1 overflow-hidden transition-colors group-hover:border-primary-500/50">
                   {user?.avatar ? (
-                    <img src={user.avatar} alt="avatar" className="w-full h-full object-cover rounded-full" />
+                    <img src={user.avatar?.replace('http://', 'https://')} alt="avatar" className="w-full h-full object-cover rounded-full" />
                   ) : (
                     <div className="w-full h-full bg-slate-100 dark:bg-white/5 flex items-center justify-center text-slate-400 dark:text-white/20">
                       <User size={40} />
