@@ -55,7 +55,7 @@ export const Input = ({ label, error, className, icon: Icon, ...props }) => {
         )}
         <input
           className={twMerge(
-            "w-full bg-white/[0.02] border border-white/5 text-slate-900 dark:text-white rounded-2xl outline-none transition-all duration-300 placeholder:text-slate-400 dark:placeholder:text-white/30 caret-slate-900 dark:caret-white focus:bg-white/[0.05] focus:border-primary-500/50 focus:shadow-[0_0_25px_-12px_rgba(139,92,246,0.6)]",
+            "w-full bg-white/[0.02] border border-white/5 text-slate-900 dark:text-white rounded-2xl outline-none transition-all duration-300 placeholder:text-slate-500/90 dark:placeholder:text-white/50 placeholder:font-medium caret-slate-900 dark:caret-white focus:bg-white/[0.05] focus:border-primary-500/50 focus:shadow-[0_0_25px_-12px_rgba(139,92,246,0.6)]",
             Icon ? "pl-14 pr-6 py-4" : "px-6 py-4",
             error && "border-red-500/30 focus:border-red-500/50 focus:shadow-none",
             className
