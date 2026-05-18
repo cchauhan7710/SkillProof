@@ -44,87 +44,90 @@ export const Navbar = () => {
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
       isScrolled ? 'py-3' : 'py-4.5'
     }`}>
-      <div className="w-full md:max-w-[620px] ml-auto mr-0 md:mr-10 px-4 md:px-0">
-        <div className={`relative flex items-center justify-between px-4 py-2.5 rounded-full transition-all duration-700 ${
-          isScrolled
-            ? 'bg-white border border-slate-200 dark:bg-slate-950 dark:border-[#49c5b6]/40 shadow-[0_8px_30px_rgba(73,197,182,0.3)]'
-            : 'bg-white border border-slate-100 dark:bg-gradient-to-r dark:from-[#0d1e1c] dark:to-[#081312] dark:border-[#49c5b6]/35 shadow-[0_4px_25px_rgba(73,197,182,0.18)]'
-        }`}>
-          {/* Logo */}
-          <Link to="/" className="flex items-center group">
-            <img
-              src="/logo.png"
-              alt="SkillProof Logo"
-              className="h-8 md:h-9 w-auto object-contain transition-transform duration-500 group-hover:scale-110"
-            />
-          </Link>
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between w-full">
+        {/* Logo (Floats on the Left Side of the page, completely outside the capsule navbar!) */}
+        <Link to="/" className="flex items-center group relative z-10 pl-2">
+          <img
+            src="/logo.png"
+            alt="SkillProof Logo"
+            className="h-9 md:h-10 w-auto object-contain transition-transform duration-500 group-hover:scale-110 filter drop-shadow-[0_2px_8px_rgba(73,197,182,0.2)]"
+          />
+        </Link>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-1">
-            <div className="flex items-center space-x-1 mr-2 pr-2 border-r border-slate-200 dark:border-white/15">
-              {user && navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.path}
-                  className={`px-3 py-1 rounded-full text-[10px] font-display font-extrabold uppercase tracking-wider transition-all duration-500 ${
-                    isActive(link.path) 
-                      ? 'bg-[#49c5b6] text-white shadow-lg shadow-[#49c5b6]/20' 
-                      : 'text-slate-700 dark:text-slate-200 hover:text-[#49c5b6] dark:hover:text-[#49c5b6]'
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
+        {/* Narrow Floating Navbar Capsule (aligned to the right) */}
+        <div className="w-full md:max-w-[480px] ml-auto mr-0 px-4 md:px-0 flex justify-end">
+          <div className={`relative flex items-center justify-between px-4 py-2.5 rounded-full transition-all duration-700 w-full ${
+            isScrolled
+              ? 'bg-white border border-slate-200 dark:bg-slate-950 dark:border-[#49c5b6]/40 shadow-[0_8px_30px_rgba(73,197,182,0.3)]'
+              : 'bg-white border border-slate-100 dark:bg-gradient-to-r dark:from-[#0d1e1c] dark:to-[#081312] dark:border-[#49c5b6]/35 shadow-[0_4px_25px_rgba(73,197,182,0.18)]'
+          }`}>
+            {/* Desktop Nav */}
+            <div className="hidden md:flex items-center space-x-1 w-full justify-between">
+              <div className="flex items-center space-x-1 mr-2 pr-2 border-r border-slate-200 dark:border-white/15">
+                {user && navLinks.map((link) => (
+                  <Link
+                    key={link.name}
+                    to={link.path}
+                    className={`px-3 py-1 rounded-full text-[10px] font-display font-extrabold uppercase tracking-wider transition-all duration-500 ${
+                      isActive(link.path) 
+                        ? 'bg-[#49c5b6] text-white shadow-lg shadow-[#49c5b6]/20' 
+                        : 'text-slate-700 dark:text-slate-200 hover:text-[#49c5b6] dark:hover:text-[#49c5b6]'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
+
+              {user ? (
+                <div className="flex items-center space-x-2">
+                  <button 
+                    onClick={toggleTheme}
+                    className="p-1.5 text-slate-500 dark:text-slate-300 hover:text-[#49c5b6] dark:hover:text-[#49c5b6] transition-colors"
+                  >
+                    {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+                  </button>
+                  <Link to="/profile" className="flex items-center space-x-2 group cursor-pointer">
+                    <div className="w-7 h-7 rounded-full border border-slate-300 dark:border-white/10 p-0.5 overflow-hidden group-hover:border-slate-400 dark:group-hover:border-white/20 transition-colors">
+                       {user.avatar ? (
+                          <img src={user.avatar?.replace('http://', 'https://')} alt="avatar" className="w-full h-full object-cover rounded-full" />
+                       ) : (
+                          <div className="w-full h-full bg-slate-200 dark:bg-white/5 flex items-center justify-center text-slate-400 dark:text-white/20"><User size={12} /></div>
+                       )}
+                    </div>
+                  </Link>
+                  
+                  <button 
+                    onClick={logout}
+                    className="p-1.5 text-slate-500 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-400 transition-colors"
+                  >
+                    <LogOut size={16} />
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center space-x-1.5">
+                  <button 
+                    onClick={toggleTheme}
+                    className="p-1.5 text-slate-500 dark:text-slate-300 hover:text-[#49c5b6] dark:hover:text-[#49c5b6] transition-colors"
+                  >
+                    {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+                  </button>
+                  <Link to="/login" className="text-[10px] font-extrabold text-slate-700 dark:text-slate-200 hover:text-[#49c5b6] dark:hover:text-[#49c5b6] transition-colors uppercase tracking-wider px-2.5">Log In</Link>
+                  <Link to="/register">
+                    <button className="btn-apple bg-slate-900 dark:bg-white text-white dark:text-black !py-1.5 !px-4 !text-[10px] !font-extrabold shadow-none !tracking-wider">Sign Up</button>
+                  </Link>
+                </div>
+              )}
             </div>
 
-            {user ? (
-              <div className="flex items-center space-x-2">
-                <button 
-                  onClick={toggleTheme}
-                  className="p-1.5 text-slate-500 dark:text-slate-300 hover:text-[#49c5b6] dark:hover:text-[#49c5b6] transition-colors"
-                >
-                  {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-                </button>
-                <Link to="/profile" className="flex items-center space-x-2 group cursor-pointer">
-                  <div className="w-7 h-7 rounded-full border border-slate-300 dark:border-white/10 p-0.5 overflow-hidden group-hover:border-slate-400 dark:group-hover:border-white/20 transition-colors">
-                     {user.avatar ? (
-                        <img src={user.avatar?.replace('http://', 'https://')} alt="avatar" className="w-full h-full object-cover rounded-full" />
-                     ) : (
-                        <div className="w-full h-full bg-slate-200 dark:bg-white/5 flex items-center justify-center text-slate-400 dark:text-white/20"><User size={12} /></div>
-                     )}
-                  </div>
-                </Link>
-                
-                <button 
-                  onClick={logout}
-                  className="p-1.5 text-slate-500 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-400 transition-colors"
-                >
-                  <LogOut size={16} />
-                </button>
-              </div>
-            ) : (
-              <div className="flex items-center space-x-1.5">
-                <button 
-                  onClick={toggleTheme}
-                  className="p-1.5 text-slate-500 dark:text-slate-300 hover:text-[#49c5b6] dark:hover:text-[#49c5b6] transition-colors"
-                >
-                  {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-                </button>
-                <Link to="/login" className="text-[10px] font-extrabold text-slate-700 dark:text-slate-200 hover:text-[#49c5b6] dark:hover:text-[#49c5b6] transition-colors uppercase tracking-wider px-2.5">Log In</Link>
-                <Link to="/register">
-                  <button className="btn-apple bg-slate-900 dark:bg-white text-white dark:text-black !py-1.5 !px-4 !text-[10px] !font-extrabold shadow-none !tracking-wider">Sign Up</button>
-                </Link>
-              </div>
-            )}
+            {/* Mobile Menu Toggle */}
+            <button 
+              className="md:hidden p-2 text-slate-400 dark:text-white/20"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
           </div>
-
-          {/* Mobile Menu Toggle */}
-          <button 
-            className="md:hidden p-2 text-slate-400 dark:text-white/20"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
         </div>
       </div>
 
