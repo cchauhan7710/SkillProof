@@ -177,12 +177,14 @@ export const AnalysisResult = () => {
   }));
 
   return (
-    <div className="relative min-h-full bg-slate-50 dark:bg-black transition-colors duration-500 pt-20 sm:pt-28 md:pt-32 pb-20 md:pb-32">
+    <div className="relative min-h-full bg-slate-50 dark:bg-[#050505] transition-colors duration-500 pt-20 sm:pt-28 md:pt-32 pb-20 md:pb-32 overflow-hidden">
       <div className="absolute inset-0 bg-dot-grid opacity-[0.03] pointer-events-none" />
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse, rgba(73,197,182,0.07) 0%, transparent 65%)' }}
-      />
+      
+      {/* Colorful Background Elements */}
+      <div className="absolute top-[0%] left-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-600/20 dark:bg-indigo-600/25 blur-[120px] pointer-events-none mix-blend-screen" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-rose-600/20 dark:bg-rose-600/25 blur-[120px] pointer-events-none mix-blend-screen" />
+      <div className="absolute top-[40%] left-[20%] w-[40%] h-[40%] rounded-full bg-amber-600/20 dark:bg-amber-600/20 blur-[100px] pointer-events-none mix-blend-screen" />
+
       <Navbar />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
@@ -197,7 +199,7 @@ export const AnalysisResult = () => {
               <div className="w-1.5 h-1.5 bg-[#49c5b6] rounded-full animate-pulse shadow-[0_0_8px_rgba(73,197,182,0.6)]" />
               <span className="text-[9px] md:text-[10px] font-mono tracking-widest uppercase font-bold">Verified Registry Port</span>
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-editorial font-normal italic tracking-normal leading-tight md:leading-none text-slate-900 dark:text-white mb-2 md:mb-4">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-editorial font-normal italic tracking-normal leading-tight md:leading-none text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-emerald-400 to-green-500 mb-2 md:mb-4 pb-2 drop-shadow-sm">
               {candidateName || 'Core Build'}
             </h1>
           </div>
@@ -525,7 +527,7 @@ export const AnalysisResult = () => {
                  <div className="flex flex-col gap-4 md:gap-6 items-start flex-shrink-0">
                     <Target className="w-10 h-10 md:w-12 md:h-12 text-primary-500" />
                     <div>
-                      <h2 className="text-4xl md:text-6xl font-editorial font-normal italic tracking-normal leading-tight text-white mb-2 md:mb-3">Strategic <span className="text-primary-500">Insight.</span></h2>
+                      <h2 className="text-4xl md:text-6xl font-editorial font-normal italic tracking-normal leading-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-rose-400 mb-2 md:mb-3 pb-2 drop-shadow-sm">Strategic <span className="text-primary-500">Insight.</span></h2>
                       <p className="tech-mono text-white/50 !text-[8px] md:!text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em]">Growth pathways established and mapped</p>
                     </div>
                  </div>
