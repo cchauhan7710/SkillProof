@@ -47,8 +47,8 @@ export const Navbar = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className={`relative flex items-center justify-between px-6 py-3 rounded-full transition-all duration-700 ${
           isScrolled
-            ? 'bg-white/90 dark:bg-[#0b1c1a]/95 backdrop-blur-2xl border border-[#49c5b6]/40 dark:border-[#49c5b6]/30 shadow-[0_8px_32px_0_rgba(73,197,182,0.25)]'
-            : 'bg-[#49c5b6]/10 dark:bg-[#49c5b6]/5 backdrop-blur-xl border border-[#49c5b6]/30 dark:border-[#49c5b6]/20 shadow-[0_8px_32px_0_rgba(73,197,182,0.15)]'
+            ? 'bg-white border border-slate-200 dark:bg-slate-950 dark:border-[#49c5b6]/40 shadow-[0_8px_30px_rgba(73,197,182,0.3)]'
+            : 'bg-white border border-slate-100 dark:bg-gradient-to-r dark:from-[#0d1e1c] dark:to-[#081312] dark:border-[#49c5b6]/35 shadow-[0_4px_25px_rgba(73,197,182,0.18)]'
         }`}>
           {/* Logo */}
           <Link to="/" className="flex items-center group">
@@ -61,7 +61,7 @@ export const Navbar = () => {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-2">
-            <div className="flex items-center space-x-2 mr-4 pr-4 border-r border-slate-200 dark:border-white/10">
+            <div className="flex items-center space-x-2 mr-4 pr-4 border-r border-slate-200 dark:border-white/15">
               {user && navLinks.map((link) => (
                 <Link
                   key={link.name}
@@ -69,7 +69,7 @@ export const Navbar = () => {
                   className={`px-4 py-1.5 rounded-full text-xs font-display font-extrabold uppercase tracking-wider transition-all duration-500 ${
                     isActive(link.path) 
                       ? 'bg-[#49c5b6] text-white shadow-lg shadow-[#49c5b6]/20' 
-                      : 'text-slate-600 dark:text-white/40 hover:text-slate-950 dark:hover:text-white'
+                      : 'text-slate-700 dark:text-slate-200 hover:text-[#49c5b6] dark:hover:text-[#49c5b6]'
                   }`}
                 >
                   {link.name}
@@ -81,7 +81,7 @@ export const Navbar = () => {
               <div className="flex items-center space-x-4">
                 <button 
                   onClick={toggleTheme}
-                  className="p-2 text-slate-400 dark:text-white/20 hover:text-slate-900 dark:hover:text-white transition-colors"
+                  className="p-2 text-slate-500 dark:text-slate-300 hover:text-[#49c5b6] dark:hover:text-[#49c5b6] transition-colors"
                 >
                   {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
                 </button>
@@ -98,7 +98,7 @@ export const Navbar = () => {
                 
                 <button 
                   onClick={logout}
-                  className="p-2 text-slate-400 dark:text-white/20 hover:text-red-500 dark:hover:text-red-400 transition-colors"
+                  className="p-2 text-slate-500 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-400 transition-colors"
                 >
                   <LogOut size={18} />
                 </button>
@@ -107,11 +107,11 @@ export const Navbar = () => {
               <div className="flex items-center space-x-2">
                 <button 
                   onClick={toggleTheme}
-                  className="p-2 text-slate-400 dark:text-white/20 hover:text-slate-900 dark:hover:text-white transition-colors"
+                  className="p-2 text-slate-500 dark:text-slate-300 hover:text-[#49c5b6] dark:hover:text-[#49c5b6] transition-colors"
                 >
                   {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
                 </button>
-                <Link to="/login" className="text-xs font-extrabold text-slate-600 dark:text-white/40 hover:text-slate-950 dark:hover:text-white transition-colors uppercase tracking-wider px-4">Log In</Link>
+                <Link to="/login" className="text-xs font-extrabold text-slate-700 dark:text-slate-200 hover:text-[#49c5b6] dark:hover:text-[#49c5b6] transition-colors uppercase tracking-wider px-4">Log In</Link>
                 <Link to="/register">
                   <button className="btn-apple bg-slate-900 dark:bg-white text-white dark:text-black !py-2 !px-6 !text-xs !font-extrabold shadow-none !tracking-wider">Sign Up</button>
                 </Link>
