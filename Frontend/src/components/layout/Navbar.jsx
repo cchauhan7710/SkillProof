@@ -61,15 +61,15 @@ export const Navbar = () => {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-2">
-            <div className="flex items-center space-x-2 mr-4 pr-4 border-r border-white/5">
+            <div className="flex items-center space-x-2 mr-4 pr-4 border-r border-slate-200 dark:border-white/10">
               {user && navLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`px-4 py-1.5 rounded-full text-[10px] font-display font-bold uppercase tracking-widest transition-all duration-500 ${
+                  className={`px-4 py-1.5 rounded-full text-xs font-display font-extrabold uppercase tracking-wider transition-all duration-500 ${
                     isActive(link.path) 
                       ? 'bg-[#49c5b6] text-white shadow-lg shadow-[#49c5b6]/20' 
-                      : 'text-slate-500 dark:text-white/30 hover:text-slate-900 dark:hover:text-white'
+                      : 'text-slate-600 dark:text-white/40 hover:text-slate-950 dark:hover:text-white'
                   }`}
                 >
                   {link.name}
@@ -111,9 +111,9 @@ export const Navbar = () => {
                 >
                   {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
                 </button>
-                <Link to="/login" className="text-[10px] font-bold text-slate-500 dark:text-white/30 hover:text-slate-900 dark:hover:text-white transition-colors uppercase tracking-widest px-4">Log In</Link>
+                <Link to="/login" className="text-xs font-extrabold text-slate-600 dark:text-white/40 hover:text-slate-950 dark:hover:text-white transition-colors uppercase tracking-wider px-4">Log In</Link>
                 <Link to="/register">
-                  <button className="btn-apple bg-slate-900 dark:bg-white text-white dark:text-black !py-2 !px-6 !text-[10px] shadow-none !tracking-widest">Sign Up</button>
+                  <button className="btn-apple bg-slate-900 dark:bg-white text-white dark:text-black !py-2 !px-6 !text-xs !font-extrabold shadow-none !tracking-wider">Sign Up</button>
                 </Link>
               </div>
             )}

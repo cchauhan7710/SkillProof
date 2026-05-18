@@ -130,7 +130,6 @@ export const Register = () => {
                     </label>
                     <Input
                       type="text"
-                      placeholder="Jane Doe"
                       value={formData.fullname}
                       onChange={(e) => setFormData({ ...formData, fullname: e.target.value })}
                       required
@@ -144,7 +143,6 @@ export const Register = () => {
                     </label>
                     <Input
                       type="text"
-                      placeholder="jane_dev"
                       value={formData.username}
                       onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                       required
@@ -161,7 +159,6 @@ export const Register = () => {
                   </label>
                   <Input
                     type="email"
-                    placeholder="name@example.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
@@ -177,7 +174,6 @@ export const Register = () => {
                   </label>
                   <Input
                     type="password"
-                    placeholder="••••••••"
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     required
