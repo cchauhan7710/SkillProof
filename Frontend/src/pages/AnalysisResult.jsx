@@ -391,7 +391,7 @@ export const AnalysisResult = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
                      {skillVerification?.map((item, idx) => {
                         // Use LLM accuracy_score if available, else invert fakeSkillRisk
-                        const displayScore = item.accuracyScore !== null && item.accuracyScore !== undefined
+                        let displayScore = item.accuracyScore !== null && item.accuracyScore !== undefined
                           ? item.accuracyScore
                           : (item.fakeSkillRisk?.score === 0 ? 100 : 100 - (item.fakeSkillRisk?.score || 0));
 
@@ -413,10 +413,13 @@ export const AnalysisResult = () => {
                         }
 
                         // 1. Determine status label based on actual mechanical verification status from GitHub or dynamic backfill
-                        const isVerified = status === 'Verified' || loc > 0 || commits > 0 || displayScore >= 75;
+                        const isVerified = status === 'Verified' || loc > 0 || commits > 0;
+                        if (!isVerified) {
+                          displayScore = 25;
+                        }
                         const statusLabel = isVerified ? 'Verified' : 'Unverified';
-                        const statusColorClass = isVerified ? 'text-emerald-500 dark:text-emerald-400' : 'text-slate-500 dark:text-white/40';
-                        const statusDotClass = isVerified ? 'bg-emerald-500' : 'bg-slate-400';
+                        const statusColorClass = isVerified ? 'text-emerald-500 dark:text-emerald-400' : 'text-rose-500 dark:text-rose-400 font-bold';
+                        const statusDotClass = isVerified ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500';
 
                         // 2. Color progress bar & score badge based purely on score values
                         let barColorClass = '';
