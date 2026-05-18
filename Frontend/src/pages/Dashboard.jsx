@@ -641,10 +641,10 @@ export const Dashboard = () => {
     });
 
   const statCards = [
-    { label: 'Total Audits',    value: analyses.length,   Icon: Scan,        color: 'text-slate-700 dark:text-white/80',      bg: 'bg-slate-50 dark:bg-white/[0.02]', border: 'border-slate-200 dark:border-slate-200 dark:border-white/[0.05]' },
-    { label: 'Skills Found',    value: totalSkills,       Icon: Cpu,         color: 'text-primary-400',   bg: 'bg-primary-500/[0.05]', border: 'border-primary-500/20'   },
-    { label: 'Avg Trust',       value: `${avgTrust}%`,    Icon: ShieldCheck, color: 'text-secondary-400', bg: 'bg-secondary-500/[0.05]', border: 'border-secondary-500/20' },
-    { label: 'Verified',        value: completed.length,  Icon: CheckCircle2, color: 'text-slate-700 dark:text-white/80',     bg: 'bg-slate-50 dark:bg-white/[0.02]', border: 'border-slate-200 dark:border-slate-200 dark:border-white/[0.05]' },
+    { label: 'Total Audits',    value: analyses.length,   Icon: Scan,        color: 'text-slate-700 dark:text-white/80' },
+    { label: 'Skills Found',    value: totalSkills,       Icon: Cpu,         color: 'text-[#49c5b6]'   },
+    { label: 'Avg Trust',       value: `${avgTrust}%`,    Icon: ShieldCheck, color: 'text-emerald-500' },
+    { label: 'Verified',        value: completed.length,  Icon: CheckCircle2, color: 'text-blue-500' },
   ];
 
   return (
@@ -711,17 +711,17 @@ export const Dashboard = () => {
 
         {/* ── stat cards + trust chart ── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-6 mb-12 sm:mb-16">
-          {statCards.map(({ label, value, Icon, color, bg, border }, i) => (
+          {statCards.map(({ label, value, Icon, color }, i) => (
              <motion.div
                key={i}
                initial={{ opacity: 0, scale: 0.95 }}
                animate={{ opacity: 1, scale: 1 }}
                transition={{ delay: i * 0.1, duration: 0.5, ease: "easeOut" }}
-               className={`p-6 rounded-[2rem] border ${border} ${bg} backdrop-blur-xl shadow-sm flex flex-col justify-between transition-all duration-500 hover:-translate-y-1 hover:border-[#49c5b6]/30 hover:shadow-lg`}
+               className="p-6 rounded-[2rem] border border-slate-200 dark:border-white/[0.06] bg-transparent backdrop-blur-md shadow-sm flex flex-col justify-between transition-all duration-500 hover:-translate-y-1 hover:border-[#49c5b6]/40 hover:shadow-lg hover:shadow-[#49c5b6]/5"
              >
                <div className="flex items-center justify-between mb-4">
                   <span className="text-[10px] font-mono font-semibold text-slate-500 dark:text-white/35 uppercase tracking-[0.25em]">{label}</span>
-                  <div className={`p-2 rounded-xl bg-slate-100 dark:bg-white/5 ${color} border border-slate-200 dark:border-white/10`}>
+                  <div className={`p-2 rounded-xl bg-slate-100/50 dark:bg-white/[0.03] ${color} border border-slate-200/50 dark:border-white/[0.06]`}>
                     <Icon size={16} />
                   </div>
                </div>
@@ -734,7 +734,7 @@ export const Dashboard = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4, duration: 0.5, ease: "easeOut" }}
-            className="sm:col-span-2 lg:col-span-1 p-6 rounded-[2rem] border border-slate-200 dark:border-white/[0.05] bg-slate-50 dark:bg-white/[0.02] flex flex-col justify-between shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-[#49c5b6]/30 hover:shadow-lg"
+            className="sm:col-span-2 lg:col-span-1 p-6 rounded-[2rem] border border-slate-200 dark:border-white/[0.06] bg-transparent backdrop-blur-md flex flex-col justify-between shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-[#49c5b6]/40 hover:shadow-lg hover:shadow-[#49c5b6]/5"
           >
             <div className="flex items-center justify-between mb-2">
                <span className="text-[10px] font-mono font-semibold text-slate-500 dark:text-white/35 uppercase tracking-[0.25em]">Trust Pulse</span>
@@ -750,10 +750,10 @@ export const Dashboard = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
         >
-          <div className="rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0a0a0a] shadow-xl overflow-hidden flex flex-col">
+          <div className="rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-white/[0.06] bg-transparent backdrop-blur-md shadow-xl overflow-hidden flex flex-col">
 
             {/* toolbar */}
-            <div className="p-4 sm:p-6 sm:px-8 border-b border-slate-200 dark:border-white/[0.05] flex flex-col gap-4 bg-slate-50 dark:bg-white/[0.01]">
+            <div className="p-4 sm:p-6 sm:px-8 border-b border-slate-200 dark:border-white/[0.05] flex flex-col gap-4 bg-transparent">
 
               {/* Row 1: title + search */}
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -835,7 +835,7 @@ export const Dashboard = () => {
             </div>
 
             {/* list content */}
-            <div className="bg-white dark:bg-[#0a0a0a]">
+            <div className="bg-transparent">
               {loading ? (
                 <div className="py-24 sm:py-32 flex flex-col items-center justify-center gap-4 px-4 text-center">
                   <Loader2 size={32} className="animate-spin text-primary-500/50" />
@@ -861,7 +861,7 @@ export const Dashboard = () => {
               ) : (
                 <div className="flex flex-col divide-y divide-white/[0.04]">
                   {/* Desktop Header */}
-                  <div className="hidden lg:grid grid-cols-[2fr_1.5fr_2fr_1fr_auto] px-8 py-4 bg-slate-50 dark:bg-white/[0.02] border-b border-slate-200 dark:border-slate-200 dark:border-white/[0.04] text-xs font-semibold text-slate-500 dark:text-white/40 uppercase tracking-widest">
+                  <div className="hidden lg:grid grid-cols-[2fr_1.5fr_2fr_1fr_auto] px-8 py-4 bg-transparent border-b border-slate-200 dark:border-white/[0.04] text-xs font-semibold text-slate-500 dark:text-white/40 uppercase tracking-widest">
                     <span>Target</span>
                     <span>Confidence</span>
                     <span>Competency Profile</span>
@@ -883,7 +883,7 @@ export const Dashboard = () => {
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.3 }}
                         onClick={() => setSelected(a)}
-                        className="flex flex-col lg:grid lg:grid-cols-[2fr_1.5fr_2fr_1fr_auto] gap-y-4 px-4 sm:px-6 lg:px-8 py-5 hover:bg-slate-50 dark:bg-slate-100 dark:bg-white/[0.03] cursor-pointer transition-colors group items-start lg:items-center"
+                        className="flex flex-col lg:grid lg:grid-cols-[2fr_1.5fr_2fr_1fr_auto] gap-y-4 px-4 sm:px-6 lg:px-8 py-5 bg-transparent hover:bg-slate-100/50 dark:hover:bg-white/[0.02] cursor-pointer transition-colors group items-start lg:items-center"
                       >
                         {/* 1. Target Info */}
                         <div className="flex items-center gap-4 w-full lg:w-auto">
