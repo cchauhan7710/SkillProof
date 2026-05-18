@@ -426,17 +426,25 @@ export const AnalysisResult = () => {
                         const statusColorClass = isVerified ? 'text-emerald-500 dark:text-emerald-400' : 'text-rose-500 dark:text-rose-400 font-bold';
                         const statusDotClass = isVerified ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500';
 
-                        // 2. Color progress bar & score badge based purely on score values
-                        let barColorClass = '';
+                        // 2. Color progress bar & score badge based purely on score values with bulletproof Hex color styling
+                        let barBgColor = '';
+                        let barShadow = '';
                         let scoreColorClass = '';
-                        if (displayScore >= 75) {
-                          barColorClass = 'bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.4)]';
+                        if (!isVerified) {
+                          barBgColor = '#ef4444'; // Solid Red for High Risk / Unverified
+                          barShadow = '0 0 12px rgba(239, 68, 68, 0.6)';
+                          scoreColorClass = 'text-rose-500 dark:text-rose-400 font-black';
+                        } else if (displayScore >= 75) {
+                          barBgColor = '#10b981'; // Emerald-500 (Verified Good)
+                          barShadow = '0 0 12px rgba(16, 185, 129, 0.6)';
                           scoreColorClass = 'text-emerald-500 dark:text-emerald-400';
                         } else if (displayScore >= 45) {
-                          barColorClass = 'bg-amber-500 shadow-[0_0_12px_rgba(245,158,11,0.4)]';
+                          barBgColor = '#f59e0b'; // Amber-500 (Medium)
+                          barShadow = '0 0 12px rgba(245, 158, 11, 0.6)';
                           scoreColorClass = 'text-amber-500 dark:text-amber-400';
                         } else {
-                          barColorClass = 'bg-rose-500 shadow-[0_0_12px_rgba(244,63,94,0.4)]';
+                          barBgColor = '#ef4444'; // Red-500 (Low Score)
+                          barShadow = '0 0 12px rgba(239, 68, 68, 0.6)';
                           scoreColorClass = 'text-rose-500 dark:text-rose-400';
                         }
 
@@ -489,7 +497,8 @@ export const AnalysisResult = () => {
                                 initial={{ width: 0 }}
                                 animate={{ width: `${Math.max(0, Math.min(100, displayScore))}%` }}
                                 transition={{ duration: 1.5, delay: idx * 0.1, ease: "easeOut" }}
-                                className={`h-full ${barColorClass}`} 
+                                style={{ backgroundColor: barBgColor, boxShadow: barShadow }}
+                                className="h-full rounded-full" 
                               />
                             </div>
 
