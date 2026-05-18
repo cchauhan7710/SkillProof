@@ -413,7 +413,7 @@ export const AnalysisResult = () => {
                         }
 
                         // 1. Determine status label based on actual mechanical verification status from GitHub or dynamic backfill
-                        const isVerified = status === 'Verified' || loc > 0 || commits > 0;
+                        const isVerified = loc > 0 || commits > 0 || status === 'Verified';
                         if (!isVerified) {
                           displayScore = 25;
                         }
@@ -434,6 +434,12 @@ export const AnalysisResult = () => {
                           barColorClass = 'bg-rose-500 shadow-[0_0_12px_rgba(244,63,94,0.4)]';
                           scoreColorClass = 'text-rose-500 dark:text-rose-400';
                         }
+
+                        // 3. Dynamic premium natural-language verification summary inside the card
+                        const firstName = candidateName ? candidateName.split(' ')[0] : 'The candidate';
+                        const dynamicSummary = isVerified 
+                          ? `${firstName} has authored ${loc.toLocaleString()} lines of code and contributed ${commits} commits across verified public repositories for this technology.`
+                          : `No matching repository evidence was detected on GitHub for ${item.name}. Verification status remains unproven.`;
 
                         return (
                           <div key={idx} className="bg-slate-50 dark:bg-white/[0.02] border border-slate-200/60 dark:border-white/[0.04] p-4 sm:p-5 rounded-2xl md:rounded-[1.5rem] hover:shadow-lg dark:hover:bg-white/[0.04] transition-all duration-300 overflow-hidden flex flex-col justify-between">
@@ -467,12 +473,10 @@ export const AnalysisResult = () => {
                                   </div>
                               </div>
 
-                              {/* LLM Reasoning tooltip */}
-                              {item.reasoning && (
-                                <p className="text-[11px] md:text-xs text-slate-600 dark:text-white/50 leading-relaxed mb-3 italic border-l-2 border-slate-200 dark:border-white/10 pl-2">
-                                  {item.reasoning}
-                                </p>
-                              )}
+                              {/* LLM Reasoning & Dynamic Evidence Summary */}
+                              <p className="text-[11px] md:text-xs text-slate-600 dark:text-white/50 leading-relaxed mb-3 italic border-l-2 border-slate-200 dark:border-white/10 pl-2">
+                                {dynamicSummary}
+                              </p>
                             </div>
 
                             <div className="w-full h-1.5 bg-slate-200 dark:bg-white/[0.05] rounded-full overflow-hidden mt-4">
