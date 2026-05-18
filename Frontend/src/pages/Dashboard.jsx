@@ -57,7 +57,7 @@ const SkillPill = ({ skill }) => {
   const safe  = risk <= 30;
   const ghost = risk >= 70;
   return (
-    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] sm:text-xs font-medium tracking-wide border
+    <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold tracking-wide border
       ${safe  ? 'border-secondary-500/20 bg-secondary-500/10 text-secondary-400' :
         ghost ? 'border-red-500/20 bg-red-500/10 text-red-400' :
                 'border-primary-500/20 bg-primary-500/10 text-primary-400'}`}>
@@ -720,7 +720,7 @@ export const Dashboard = () => {
                className="p-6 rounded-[2rem] border border-slate-200 dark:border-white/[0.06] bg-transparent backdrop-blur-md shadow-sm flex flex-col justify-between transition-all duration-500 hover:-translate-y-1 hover:border-[#49c5b6]/40 hover:shadow-lg hover:shadow-[#49c5b6]/5"
              >
                <div className="flex items-center justify-between mb-4">
-                  <span className="text-[10px] font-mono font-semibold text-slate-500 dark:text-white/35 uppercase tracking-[0.25em]">{label}</span>
+                  <span className="text-xs font-bold text-slate-600 dark:text-white/45 uppercase tracking-[0.2em]">{label}</span>
                   <div className={`p-2 rounded-xl bg-slate-100/50 dark:bg-white/[0.03] ${color} border border-slate-200/50 dark:border-white/[0.06]`}>
                     <Icon size={16} />
                   </div>
@@ -737,7 +737,7 @@ export const Dashboard = () => {
             className="sm:col-span-2 lg:col-span-1 p-6 rounded-[2rem] border border-slate-200 dark:border-white/[0.06] bg-transparent backdrop-blur-md flex flex-col justify-between shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-[#49c5b6]/40 hover:shadow-lg hover:shadow-[#49c5b6]/5"
           >
             <div className="flex items-center justify-between mb-2">
-               <span className="text-[10px] font-mono font-semibold text-slate-500 dark:text-white/35 uppercase tracking-[0.25em]">Trust Pulse</span>
+               <span className="text-xs font-bold tracking-[0.2em]">Trust Pulse</span>
                <Activity size={15} className="text-slate-400 dark:text-white/20" />
             </div>
             <MiniBarChart scores={trustScores} />
@@ -779,7 +779,7 @@ export const Dashboard = () => {
               <div className="flex flex-wrap items-center gap-2">
 
                 {/* Sort buttons */}
-                <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-slate-400 dark:text-white/25 mr-1">Sort Score</span>
+                <span className="font-mono text-xs uppercase tracking-[0.2em] font-bold text-slate-500 dark:text-white/35 mr-1">Sort Score</span>
                 {[
                   { val: 'desc', label: '↓ High → Low' },
                   { val: 'asc',  label: '↑ Low → High' },
@@ -788,7 +788,7 @@ export const Dashboard = () => {
                   <button
                     key={val}
                     onClick={() => setSortOrder(val)}
-                    className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider border transition-all ${
+                    className={`px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider border transition-all ${
                       sortOrder === val
                         ? 'bg-slate-900 dark:bg-white text-white dark:text-black border-transparent shadow-sm'
                         : 'bg-slate-100 dark:bg-white/[0.04] border-slate-200 dark:border-white/[0.08] text-slate-500 dark:text-white/40 hover:border-slate-300 dark:hover:border-white/20'
@@ -802,12 +802,12 @@ export const Dashboard = () => {
                 <span className="w-px h-5 bg-slate-200 dark:bg-white/10 mx-1" />
 
                 {/* Score threshold */}
-                <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-slate-400 dark:text-white/25 mr-1">Score</span>
+                <span className="font-mono text-xs uppercase tracking-[0.2em] font-bold text-slate-500 dark:text-white/35 mr-1">Score</span>
 
                 {/* Operator toggle */}
                 <button
                   onClick={() => setScoreOp(p => p === 'gte' ? 'lte' : 'gte')}
-                  className="px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider border bg-slate-100 dark:bg-white/[0.04] border-slate-200 dark:border-white/[0.08] text-slate-600 dark:text-white/50 hover:border-slate-300 dark:hover:border-white/20 transition-all min-w-[44px] text-center"
+                  className="px-3.5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider border bg-slate-100 dark:bg-white/[0.04] border-slate-200 dark:border-white/[0.08] text-slate-600 dark:text-white/50 hover:border-slate-300 dark:hover:border-white/20 transition-all min-w-[48px] text-center"
                 >
                   {scoreOp === 'gte' ? '≥' : '≤'}
                 </button>
@@ -818,14 +818,14 @@ export const Dashboard = () => {
                   placeholder="Score"
                   value={scoreVal}
                   onChange={e => setScoreVal(e.target.value)}
-                  className="w-20 bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.08] rounded-lg h-8 px-3 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/20 focus:border-slate-300 dark:focus:border-white/20 focus:outline-none transition-all"
+                  className="w-24 bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.08] rounded-lg h-9 px-3.5 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/20 focus:border-slate-300 dark:focus:border-white/20 focus:outline-none transition-all"
                 />
 
                 {/* Clear filter */}
                 {(scoreVal !== '' || sortOrder !== 'none') && (
                   <button
                     onClick={() => { setScoreVal(''); setSortOrder('none'); }}
-                    className="px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-red-500/20 bg-red-500/5 text-red-500 hover:bg-red-500/10 transition-all"
+                    className="px-3.5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider border border-red-500/20 bg-red-500/5 text-red-500 hover:bg-red-500/10 transition-all"
                   >
                     Clear
                   </button>
@@ -861,7 +861,7 @@ export const Dashboard = () => {
               ) : (
                 <div className="flex flex-col divide-y divide-white/[0.04]">
                   {/* Desktop Header */}
-                  <div className="hidden lg:grid grid-cols-[2fr_1.5fr_2fr_1fr_auto] px-8 py-4 bg-transparent border-b border-slate-200 dark:border-white/[0.04] text-xs font-semibold text-slate-500 dark:text-white/40 uppercase tracking-widest">
+                  <div className="hidden lg:grid grid-cols-[2fr_1.5fr_2fr_1fr_auto] px-8 py-4 bg-transparent border-b border-slate-200 dark:border-white/[0.04] text-sm font-bold text-slate-700 dark:text-white/60 uppercase tracking-widest">
                     <span>Target</span>
                     <span>Confidence</span>
                     <span>Competency Profile</span>
@@ -891,13 +891,13 @@ export const Dashboard = () => {
                             <FileText size={18} />
                           </div>
                           <div className="min-w-0 flex-1">
-                            <p className="font-semibold text-sm text-slate-800 dark:text-white/90 truncate group-hover:text-white transition-colors mb-0.5">
+                            <p className="font-extrabold text-base text-slate-800 dark:text-white/90 truncate group-hover:text-white transition-colors mb-0.5">
                               Audit #{a._id.slice(-6).toUpperCase()}
                             </p>
-                            <div className="flex items-center gap-2 flex-wrap text-xs text-slate-500 dark:text-white/40">
+                            <div className="flex items-center gap-2 flex-wrap text-sm font-medium text-slate-500 dark:text-white/40">
                               {a.githubUsername && (
                                 <span className="text-secondary-400/80 flex items-center gap-1">
-                                  <Github size={10} /> {a.githubUsername}
+                                  <Github size={12} /> {a.githubUsername}
                                 </span>
                               )}
                               <span>• {fmtDate(a.createdAt)}</span>
@@ -910,23 +910,23 @@ export const Dashboard = () => {
                            <div className="flex justify-between lg:justify-start lg:gap-3 items-end mb-1.5">
                               <span className="text-xs text-slate-500 dark:text-white/40 lg:hidden">Trust Score</span>
                               <div className="flex items-baseline gap-0.5">
-                                <span className={`text-xl font-bold ${col.text}`}>{trust}</span>
-                                <span className="text-xs text-slate-400 dark:text-white/30">%</span>
+                                <span className={`text-2xl font-black ${col.text}`}>{trust}</span>
+                                <span className="text-sm text-slate-400 dark:text-white/30">%</span>
                               </div>
                            </div>
-                           <div className="h-1.5 w-full max-w-[12rem] bg-slate-100 dark:bg-slate-100 dark:bg-white/[0.05] rounded-full overflow-hidden">
+                           <div className="h-2 w-full max-w-[12rem] bg-slate-100 dark:bg-slate-100 dark:bg-white/[0.05] rounded-full overflow-hidden">
                              <div className={`h-full rounded-full ${col.bg} ${col.glow}`} style={{ width: `${trust}%` }} />
                            </div>
                         </div>
 
                         {/* 3. Skills */}
                         <div className="w-full lg:w-auto">
-                          <span className="text-xs text-slate-500 dark:text-white/40 mb-2 block lg:hidden">Detected Skills</span>
+                          <span className="text-sm text-slate-500 dark:text-white/40 mb-2 block lg:hidden font-bold">Detected Skills</span>
                           <div className="flex flex-wrap gap-1.5">
                             {topSkills.length > 0 ? topSkills.map((sk, si) => <SkillPill key={si} skill={sk} />) :
-                              <span className="text-xs text-slate-400 dark:text-white/20 italic">No skills extracted</span>}
+                              <span className="text-sm text-slate-400 dark:text-white/20 italic">No skills extracted</span>}
                             {skills.length > 3 && (
-                              <span className="text-[10px] font-medium text-slate-500 dark:text-white/40 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-slate-200 dark:border-white/10 px-2 py-1 rounded-md">
+                              <span className="text-xs font-bold text-slate-500 dark:text-white/40 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-slate-200 dark:border-white/10 px-2 py-1 rounded-md">
                                 +{skills.length - 3}
                               </span>
                             )}
@@ -935,8 +935,8 @@ export const Dashboard = () => {
 
                         {/* 4. Status */}
                         <div className="w-full lg:w-auto flex justify-between items-center lg:block">
-                           <span className="text-xs text-slate-500 dark:text-white/40 lg:hidden">Status</span>
-                           <span className={`inline-flex items-center gap-2 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border ${sm.cls}`}>
+                           <span className="text-sm text-slate-500 dark:text-white/40 lg:hidden font-bold">Status</span>
+                           <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider border ${sm.cls}`}>
                              <span className="w-1.5 h-1.5 rounded-full bg-current opacity-70" />
                              {sm.label}
                            </span>
