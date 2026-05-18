@@ -50,12 +50,12 @@ export const Navbar = () => {
           <img
             src="/logo.png"
             alt="SkillProof Logo"
-            className="h-9 md:h-10 w-auto object-contain transition-transform duration-500 group-hover:scale-110 filter drop-shadow-[0_2px_8px_rgba(73,197,182,0.2)]"
+            className="h-10 md:h-12 w-auto object-contain transition-transform duration-500 group-hover:scale-110 filter drop-shadow-[0_2px_8px_rgba(73,197,182,0.2)]"
           />
         </Link>
 
         {/* Narrow Floating Navbar Capsule (aligned to the right) */}
-        <div className="ml-auto mr-0 px-4 md:px-0 flex justify-end">
+        <div className="ml-auto mr-0 px-4 md:px-0 flex items-center justify-end">
           <div className={`relative flex items-center px-4 py-2 rounded-full transition-all duration-700 ${
             isScrolled
               ? 'bg-white border border-slate-200 dark:bg-slate-950 dark:border-[#49c5b6]/40 shadow-[0_8px_30px_rgba(73,197,182,0.3)]'
