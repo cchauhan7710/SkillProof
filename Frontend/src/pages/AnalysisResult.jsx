@@ -217,7 +217,7 @@ export const AnalysisResult = () => {
     jobFit = list;
   }
 
-  let aiSummary = aiSummaryPayload;
+  let aiSummary = typeof aiSummaryPayload === 'string' ? aiSummaryPayload.trim() : '';
   if (!aiSummary || 
       aiSummary === "AI-generated profile summary details follow." || 
       aiSummary === "All-round profile showing clear depth of expertise." ||
@@ -430,22 +430,27 @@ export const AnalysisResult = () => {
                         let barBgColor = '';
                         let barShadow = '';
                         let scoreColorClass = '';
+                        let badgeBgClass = '';
                         if (!isVerified) {
                           barBgColor = '#ef4444'; // Solid Red for High Risk / Unverified
                           barShadow = '0 0 12px rgba(239, 68, 68, 0.6)';
                           scoreColorClass = 'text-rose-500 dark:text-rose-400 font-black';
+                          badgeBgClass = 'bg-rose-500/10 border-rose-500/20 text-rose-500 dark:text-rose-400 font-black';
                         } else if (displayScore >= 75) {
                           barBgColor = '#10b981'; // Emerald-500 (Verified Good)
                           barShadow = '0 0 12px rgba(16, 185, 129, 0.6)';
                           scoreColorClass = 'text-emerald-500 dark:text-emerald-400';
+                          badgeBgClass = 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500 dark:text-emerald-400';
                         } else if (displayScore >= 45) {
                           barBgColor = '#f59e0b'; // Amber-500 (Medium)
                           barShadow = '0 0 12px rgba(245, 158, 11, 0.6)';
                           scoreColorClass = 'text-amber-500 dark:text-amber-400';
+                          badgeBgClass = 'bg-amber-500/10 border-amber-500/20 text-amber-500 dark:text-amber-400';
                         } else {
                           barBgColor = '#ef4444'; // Red-500 (Low Score)
                           barShadow = '0 0 12px rgba(239, 68, 68, 0.6)';
                           scoreColorClass = 'text-rose-500 dark:text-rose-400';
+                          badgeBgClass = 'bg-rose-500/10 border-rose-500/20 text-rose-500 dark:text-rose-400';
                         }
 
                         // 3. Dynamic premium natural-language verification summary inside the card
@@ -468,9 +473,9 @@ export const AnalysisResult = () => {
                                     </p>
                                   </div>
                                 </div>
-                                <div className="flex-shrink-0 bg-white dark:bg-black/40 border border-slate-200 dark:border-white/10 px-2 py-1 rounded-lg shadow-sm text-center">
-                                  <span className={`text-sm md:text-base font-display font-black italic tabular-nums leading-none ${scoreColorClass}`}>
-                                    {displayScore}<span className="text-slate-400 dark:text-white/30 font-mono text-[8px] md:text-[9px] ml-0.5">%</span>
+                                <div className={`flex-shrink-0 border px-3 py-1.5 rounded-xl shadow-sm text-center transition-all duration-300 ${badgeBgClass}`}>
+                                  <span className="text-sm md:text-base font-display font-black italic tabular-nums leading-none">
+                                    {displayScore}<span className="opacity-60 font-mono text-[8px] md:text-[9px] ml-0.5">%</span>
                                   </span>
                                 </div>
                               </div>

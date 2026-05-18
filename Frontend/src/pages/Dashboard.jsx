@@ -81,7 +81,7 @@ const DetailPanel = ({ analysis, onClose, onDelete }) => {
 
   // Dynamic AI Summary fallback matching the resume report logic
   const aiSummaryPayload = analysis.ai_summary || analysis.aiSummary;
-  let aiSummary = aiSummaryPayload;
+  let aiSummary = typeof aiSummaryPayload === 'string' ? aiSummaryPayload.trim() : '';
   if (!aiSummary || 
       aiSummary === "AI-generated profile summary details follow." || 
       aiSummary === "All-round profile showing clear depth of expertise." ||
