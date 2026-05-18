@@ -89,6 +89,7 @@ export const Login = () => {
                   </label>
                   <Input
                     type="text"
+                    placeholder="Enter your email address"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
@@ -108,6 +109,7 @@ export const Login = () => {
                   </div>
                   <Input
                     type="password"
+                    placeholder="Enter your security password"
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     required
