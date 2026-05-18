@@ -334,11 +334,27 @@ export const AnalysisResult = () => {
                           ? item.accuracyScore
                           : (item.fakeSkillRisk?.score === 0 ? 100 : 100 - (item.fakeSkillRisk?.score || 0));
 
-                        const verdict = item.verdict || 'Unverified';
+                        let verdict = item.verdict || 'Unverified';
+
+                        // Dynamic fallback classification if the LLM verdict is missing or "Unverified"
+                        if (verdict === 'Unverified') {
+                          const hasEvidence = item.github && (item.github.commits > 0 || item.github.loc > 0 || item.github.status === 'Verified');
+                          if (hasEvidence) {
+                            if (displayScore >= 75) verdict = 'Proven';
+                            else if (displayScore >= 40) verdict = 'Plausible';
+                            else verdict = 'Overstated';
+                          } else {
+                            if (item.resumeConfidence === 'High') {
+                              verdict = 'Overstated';
+                            } else {
+                              verdict = 'Unverified';
+                            }
+                          }
+                        }
 
                         // Colour scheme by verdict
                         const verdictConfig = {
-                          'Proven':     { text: 'text-emerald-600 dark:text-emerald-400', bar: 'bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.4)]', dot: 'bg-emerald-500', label: 'Proven' },
+                          'Proven':     { text: 'text-emerald-500 dark:text-emerald-400', bar: 'bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.4)]', dot: 'bg-emerald-500', label: 'Proven' },
                           'Plausible':  { text: 'text-amber-500 dark:text-amber-400',    bar: 'bg-amber-500 shadow-[0_0_12px_rgba(245,158,11,0.4)]',   dot: 'bg-amber-500',   label: 'Plausible' },
                           'Overstated': { text: 'text-rose-600 dark:text-rose-500',       bar: 'bg-rose-500 shadow-[0_0_12px_rgba(244,63,94,0.4)]',    dot: 'bg-rose-500',    label: 'Overstated' },
                           'Unverified': { text: 'text-slate-500 dark:text-white/40',      bar: 'bg-slate-400',                                          dot: 'bg-slate-400',   label: 'Unverified' },
