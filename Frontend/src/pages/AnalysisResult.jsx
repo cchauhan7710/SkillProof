@@ -151,9 +151,10 @@ export const AnalysisResult = () => {
   } = analysis || {};
 
   const projectList = projectAudit || analysis?.projects || [];
+  const totalContributions = projectList.reduce((acc, p) => acc + (p.totalCommits ?? p.commits ?? 0), 0);
   const githubSummary = {
      publicRepos: projectList.length || 0,
-     totalContributions: summary?.totalCommits || 140, // Mock fallback for aesthetic demo
+     totalContributions: totalContributions,
      profileUrl: '#'
   };
 
@@ -245,11 +246,11 @@ export const AnalysisResult = () => {
               <div className="grid grid-cols-2 gap-4 md:gap-6 w-full pt-6 md:pt-8 border-t border-slate-100 dark:border-white/[0.05]">
                 <div className="text-center p-3 md:p-4 bg-slate-50 dark:bg-white/[0.02] rounded-xl md:rounded-2xl border border-slate-100 dark:border-white/[0.02]">
                   <span className="tech-mono !text-[7px] md:!text-[9px] !tracking-[0.1em] md:!tracking-[0.2em] text-slate-500 dark:text-white/40 uppercase block mb-2 md:mb-3">Repositories</span>
-                  <p className="text-xl md:text-2xl font-display font-bold text-slate-900 dark:text-white italic">{githubSummary?.publicRepos || 0}</p>
+                  <p className="text-xl md:text-2xl font-display font-bold text-blue-500 dark:text-blue-400 italic">{githubSummary?.publicRepos || 0}</p>
                 </div>
                 <div className="text-center p-3 md:p-4 bg-slate-50 dark:bg-white/[0.02] rounded-xl md:rounded-2xl border border-slate-100 dark:border-white/[0.02]">
                   <span className="tech-mono !text-[7px] md:!text-[9px] mb-2 md:mb-3 text-slate-500 dark:text-white/40 uppercase tracking-[0.1em] md:tracking-[0.2em] block">Total Traces</span>
-                  <p className="text-xl md:text-2xl font-display font-bold text-slate-900 dark:text-white italic">{githubSummary?.totalContributions || 140}</p>
+                  <p className="text-xl md:text-2xl font-display font-bold text-purple-500 dark:text-purple-400 italic">{githubSummary?.totalContributions || 0}</p>
                 </div>
               </div>
             </div>
@@ -280,6 +281,25 @@ export const AnalysisResult = () => {
 
           {/* DNA & Heatmap Hub (Main / Right Col) */}
           <div className="lg:col-span-2 space-y-6 md:space-y-8">
+            
+            {/* ── AI Summary Section ── */}
+            {aiSummary && (
+              <div className="w-full bg-white dark:bg-black shadow-sm border border-slate-200 dark:border-white/[0.05] p-6 sm:p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem]">
+                 <div className="flex items-start space-x-4 md:space-x-6 mb-6">
+                    <div className="p-3 md:p-4 bg-indigo-500/10 rounded-xl md:rounded-2xl border border-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex-shrink-0">
+                      <Sparkles className="w-6 h-6 md:w-7 md:h-7" />
+                    </div>
+                    <div>
+                      <h2 className="text-3xl md:text-5xl font-display font-black tracking-tight leading-none mb-2 md:mb-3 text-slate-900 dark:text-white">AI Profile.</h2>
+                      <p className="tech-mono text-slate-500 dark:text-white/40 !text-[8px] md:!text-[10px] tracking-[0.2em] md:tracking-[0.3em] uppercase">Synthesized Skill & GitHub Summary</p>
+                    </div>
+                 </div>
+                 <p className="text-sm md:text-base leading-relaxed text-slate-700 dark:text-white/80 border-l-2 border-indigo-500/30 pl-4 bg-slate-50 dark:bg-white/[0.02] p-4 rounded-r-2xl">
+                    {aiSummary}
+                 </p>
+              </div>
+            )}
+
             <div className="bg-white dark:bg-black shadow-sm border border-slate-200 dark:border-white/[0.05] rounded-[2rem] md:rounded-[2.5rem] p-6 sm:p-8 md:p-10 w-full h-full">
                
                <div className="flex items-start space-x-4 md:space-x-6 mb-6 md:mb-8">
