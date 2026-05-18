@@ -42,10 +42,10 @@ export const Navbar = () => {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
-      isScrolled ? 'py-4' : 'py-5'
+      isScrolled ? 'py-3' : 'py-4.5'
     }`}>
-      <div className="max-w-7xl mx-auto px-6">
-        <div className={`relative flex items-center justify-between px-6 py-3 rounded-full transition-all duration-700 ${
+      <div className="w-full md:max-w-4xl ml-auto mr-0 md:mr-10 px-4 md:px-0">
+        <div className={`relative flex items-center justify-between px-5 py-2 rounded-full transition-all duration-700 ${
           isScrolled
             ? 'bg-white border border-slate-200 dark:bg-slate-950 dark:border-[#49c5b6]/40 shadow-[0_8px_30px_rgba(73,197,182,0.3)]'
             : 'bg-white border border-slate-100 dark:bg-gradient-to-r dark:from-[#0d1e1c] dark:to-[#081312] dark:border-[#49c5b6]/35 shadow-[0_4px_25px_rgba(73,197,182,0.18)]'
