@@ -80,13 +80,16 @@ const DetailPanel = ({ analysis, onClose, onDelete }) => {
   const skills        = analysis.skills ?? [];
 
   // Dynamic AI Summary fallback matching the resume report logic
-  const aiSummaryPayload = analysis.ai_summary;
+  const aiSummaryPayload = analysis.ai_summary || analysis.aiSummary;
   let aiSummary = aiSummaryPayload;
   if (!aiSummary || 
       aiSummary === "AI-generated profile summary details follow." || 
       aiSummary === "All-round profile showing clear depth of expertise." ||
       aiSummary.toLowerCase().includes("could not be generated") ||
       aiSummary.toLowerCase().includes("failed") ||
+      aiSummary.toLowerCase().includes("unavailable") ||
+      aiSummary.toLowerCase().includes("not configured") ||
+      aiSummary.toLowerCase().includes("error") ||
       aiSummary.length < 50) {
     const topSkills = skills
       ?.filter(s => {

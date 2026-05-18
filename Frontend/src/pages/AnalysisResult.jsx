@@ -147,9 +147,10 @@ export const AnalysisResult = () => {
       skills: skillVerification,
       summary,
       projectAudit,
-      job_fit: jobFitPayload,
-      ai_summary: aiSummaryPayload
   } = analysis || {};
+
+  const jobFitPayload = analysis?.job_fit || analysis?.jobFit || analysis?.job_fit_recommendations;
+  const aiSummaryPayload = analysis?.ai_summary || analysis?.aiSummary;
 
   const projectList = projectAudit || analysis?.projects || [];
   const totalContributions = projectList.reduce((acc, p) => acc + (p.totalCommits ?? p.commits ?? 0), 0);
@@ -222,6 +223,9 @@ export const AnalysisResult = () => {
       aiSummary === "All-round profile showing clear depth of expertise." ||
       aiSummary.toLowerCase().includes("could not be generated") ||
       aiSummary.toLowerCase().includes("failed") ||
+      aiSummary.toLowerCase().includes("unavailable") ||
+      aiSummary.toLowerCase().includes("not configured") ||
+      aiSummary.toLowerCase().includes("error") ||
       aiSummary.length < 50) {
     const topSkills = skillVerification
       ?.filter(s => {
