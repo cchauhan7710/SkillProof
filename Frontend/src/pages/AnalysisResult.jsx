@@ -216,7 +216,12 @@ export const AnalysisResult = () => {
   }
 
   let aiSummary = aiSummaryPayload;
-  if (!aiSummary || aiSummary === "AI-generated profile summary details follow." || aiSummary === "All-round profile showing clear depth of expertise.") {
+  if (!aiSummary || 
+      aiSummary === "AI-generated profile summary details follow." || 
+      aiSummary === "All-round profile showing clear depth of expertise." ||
+      aiSummary.toLowerCase().includes("could not be generated") ||
+      aiSummary.toLowerCase().includes("failed") ||
+      aiSummary.length < 50) {
     const topSkills = skillVerification
       ?.filter(s => {
         const score = s.accuracyScore !== null && s.accuracyScore !== undefined
