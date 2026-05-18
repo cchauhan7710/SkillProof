@@ -44,7 +44,7 @@ export const Navbar = () => {
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
       isScrolled ? 'py-3' : 'py-4.5'
     }`}>
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between w-full">
+      <div className="max-w-[95%] mx-auto px-4 md:px-8 flex items-center justify-between w-full">
         {/* Logo (Floats on the Left Side of the page, completely outside the capsule navbar!) */}
         <Link to="/" className="flex items-center group relative z-10 pl-2">
           <img
