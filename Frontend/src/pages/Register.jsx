@@ -82,16 +82,16 @@ export const Register = () => {
 
             <div className="relative z-10 px-8 sm:px-10 py-10">
               {/* Header */}
-              <div className="text-center mb-6">
+              <div className="text-center mb-8">
                 <h1 className="font-display font-black text-2xl sm:text-3xl tracking-tight text-slate-900 dark:text-white">
                   Create <span className="text-[#49c5b6] italic font-normal">account.</span>
                 </h1>
-                <p className="font-mono text-[8px] uppercase tracking-[0.4em] text-slate-400 dark:text-white/25 mt-1.5">
+                <p className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/40 mt-2 font-bold">
                   New Identity Mapping
                 </p>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 {/* ── Avatar Upload ── */}
                 <div className="flex items-center gap-5 bg-slate-50/50 dark:bg-white/[0.01] p-4 rounded-2xl border border-slate-200/40 dark:border-white/[0.04]">
                   <motion.div
@@ -102,21 +102,21 @@ export const Register = () => {
                     {avatarPreview ? (
                       <img src={avatarPreview} alt="Avatar" className="w-full h-full object-cover" />
                     ) : (
-                      <div className="flex flex-col items-center gap-1 text-slate-400 dark:text-white/35 group-hover:text-[#49c5b6] transition-colors">
+                      <div className="flex flex-col items-center gap-1 text-slate-400 dark:text-white/35 group-hover:text-[#49c5b6] transition-colors font-bold">
                         <Camera size={18} />
-                        <span className="font-mono text-[7px] uppercase tracking-wider">Upload</span>
+                        <span className="font-mono text-[9px] uppercase tracking-wider">Upload</span>
                       </div>
                     )}
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                      <span className="font-mono text-[7px] uppercase tracking-wider text-white">Change</span>
+                      <span className="font-mono text-[9px] uppercase tracking-wider text-white font-bold">Change</span>
                     </div>
                   </motion.div>
                   <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/*" className="hidden" />
                   <div>
-                    <p className="font-mono text-[8px] uppercase tracking-[0.25em] text-slate-500 dark:text-white/35 font-bold">
+                    <p className="font-mono text-xs uppercase tracking-[0.15em] text-slate-500 dark:text-white/45 font-bold">
                       Profile Avatar
                     </p>
-                    <p className="font-mono text-[7px] uppercase tracking-wider text-slate-400 dark:text-white/20 mt-1">
+                    <p className="font-mono text-[10px] uppercase tracking-wider text-slate-400 dark:text-white/20 mt-1 font-semibold">
                       Required · JPG, PNG, WEBP
                     </p>
                   </div>
@@ -124,8 +124,8 @@ export const Register = () => {
 
                 {/* ── Name + Handle (2-col) ── */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label className="font-mono text-[8px] pl-3 uppercase tracking-[0.25em] text-slate-400 dark:text-white/35 font-bold">
+                  <div className="space-y-2.5">
+                    <label className="font-mono text-xs pl-3 uppercase tracking-[0.15em] text-slate-500 dark:text-white/45 font-bold">
                       Full Name
                     </label>
                     <Input
@@ -135,11 +135,11 @@ export const Register = () => {
                       onChange={(e) => setFormData({ ...formData, fullname: e.target.value })}
                       required
                       icon={Type}
-                      className="!py-3 !pl-11 !rounded-xl border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01] text-sm focus:border-[#49c5b6]/50 transition-all duration-300"
+                      className="!py-3.5 !pl-11 !rounded-2xl border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01] text-base focus:border-[#49c5b6]/50 transition-all duration-300"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label className="font-mono text-[8px] pl-3 uppercase tracking-[0.25em] text-slate-400 dark:text-white/35 font-bold">
+                  <div className="space-y-2.5">
+                    <label className="font-mono text-xs pl-3 uppercase tracking-[0.15em] text-slate-500 dark:text-white/45 font-bold">
                       Handle
                     </label>
                     <Input
@@ -149,14 +149,14 @@ export const Register = () => {
                       onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                       required
                       icon={User}
-                      className="!py-3 !pl-11 !rounded-xl border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01] text-sm focus:border-[#49c5b6]/50 transition-all duration-300"
+                      className="!py-3.5 !pl-11 !rounded-2xl border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01] text-base focus:border-[#49c5b6]/50 transition-all duration-300"
                     />
                   </div>
                 </div>
 
                 {/* ── Email ── */}
-                <div className="space-y-2">
-                  <label className="font-mono text-[8px] pl-3 uppercase tracking-[0.25em] text-slate-400 dark:text-white/35 font-bold">
+                <div className="space-y-2.5">
+                  <label className="font-mono text-xs pl-3 uppercase tracking-[0.15em] text-slate-500 dark:text-white/45 font-bold">
                     Email Identity
                   </label>
                   <Input
@@ -166,13 +166,13 @@ export const Register = () => {
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
                     icon={Mail}
-                    className="!py-3 !pl-11 !rounded-xl border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01] text-sm focus:border-[#49c5b6]/50 transition-all duration-300"
+                    className="!py-3.5 !pl-11 !rounded-2xl border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01] text-base focus:border-[#49c5b6]/50 transition-all duration-300"
                   />
                 </div>
 
                 {/* ── Password ── */}
-                <div className="space-y-2">
-                  <label className="font-mono text-[8px] pl-3 uppercase tracking-[0.25em] text-slate-400 dark:text-white/35 font-bold">
+                <div className="space-y-2.5">
+                  <label className="font-mono text-xs pl-3 uppercase tracking-[0.15em] text-slate-500 dark:text-white/45 font-bold">
                     Password Code
                   </label>
                   <Input
@@ -182,7 +182,7 @@ export const Register = () => {
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     required
                     icon={Lock}
-                    className="!py-3 !pl-11 !rounded-xl border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01] text-sm focus:border-[#49c5b6]/50 transition-all duration-300"
+                    className="!py-3.5 !pl-11 !rounded-2xl border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01] text-base focus:border-[#49c5b6]/50 transition-all duration-300"
                   />
                 </div>
 
@@ -193,7 +193,7 @@ export const Register = () => {
                       initial={{ opacity: 0, scale: 0.96 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0 }}
-                      className="bg-rose-500/5 border border-rose-500/15 text-rose-500 px-4 py-2 rounded-xl font-mono text-[9px] uppercase tracking-widest text-center"
+                      className="bg-rose-500/5 border border-rose-500/15 text-rose-500 px-4 py-3 rounded-xl font-mono text-xs uppercase tracking-wider text-center font-bold"
                     >
                       {error}
                     </motion.div>
@@ -202,28 +202,28 @@ export const Register = () => {
 
                 <button
                   type="submit"
-                  className="btn-apple h-12 w-full text-[10px] font-bold uppercase tracking-widest group rounded-xl bg-[#49c5b6] dark:bg-[#49c5b6] text-white hover:shadow-[#49c5b6]/20 transition-all duration-300"
+                  className="btn-apple h-13 w-full text-sm font-bold uppercase tracking-widest group rounded-2xl bg-[#49c5b6] dark:bg-[#49c5b6] text-white hover:shadow-[#49c5b6]/20 transition-all duration-300"
                   disabled={loading}
                 >
                   {loading ? (
-                    <span className="flex items-center justify-center gap-2">
-                      <Loader2 className="w-3.5 h-3.5 animate-spin" /> Initializing…
+                    <span className="flex items-center justify-center gap-2 text-sm">
+                      <Loader2 className="w-4 h-4 animate-spin" /> Initializing…
                     </span>
                   ) : (
-                    <span className="flex items-center justify-center gap-2">
-                      Create Account <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                    <span className="flex items-center justify-center gap-2 text-sm">
+                      Create Account <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                     </span>
                   )}
                 </button>
               </form>
 
               {/* Footer */}
-              <div className="mt-6 text-center border-t border-slate-200 dark:border-white/[0.04] pt-6">
-                <p className="font-mono text-[7px] uppercase tracking-[0.3em] text-slate-400 dark:text-white/20 mb-3">
+              <div className="mt-8 text-center border-t border-slate-200 dark:border-white/[0.04] pt-8">
+                <p className="font-mono text-xs uppercase tracking-[0.15em] text-slate-400 dark:text-white/30 mb-4 font-bold">
                   Already registered?
                 </p>
                 <Link to="/login">
-                  <button className="btn-apple-secondary h-10 w-full text-[9px] font-bold tracking-widest uppercase rounded-xl hover:border-[#49c5b6]/40 transition-colors">
+                  <button className="btn-apple-secondary h-11 w-full text-xs font-bold tracking-wider uppercase rounded-xl hover:border-[#49c5b6]/40 transition-colors">
                     Sign In
                   </button>
                 </Link>

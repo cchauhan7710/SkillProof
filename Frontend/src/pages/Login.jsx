@@ -76,15 +76,15 @@ export const Login = () => {
                 <h1 className="font-display font-black text-2xl sm:text-3xl tracking-tight text-slate-900 dark:text-white">
                   Welcome <span className="text-[#49c5b6] italic font-normal">back.</span>
                 </h1>
-                <p className="font-mono text-[8px] uppercase tracking-[0.4em] text-slate-400 dark:text-white/25 mt-1.5">
+                <p className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/40 mt-2 font-bold">
                   Establish Secure Link
                 </p>
               </div>
 
               {/* Form */}
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="space-y-2">
-                  <label className="font-mono text-[8px] pl-3 uppercase tracking-[0.3em] text-slate-400 dark:text-white/35 font-bold">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-2.5">
+                  <label className="font-mono text-xs pl-3 uppercase tracking-[0.15em] text-slate-500 dark:text-white/45 font-bold">
                     Email Identity
                   </label>
                   <Input
@@ -94,16 +94,16 @@ export const Login = () => {
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
                     icon={Mail}
-                    className="!py-3 !pl-11 !rounded-xl border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01] text-sm focus:border-[#49c5b6]/50 transition-all duration-300"
+                    className="!py-3.5 !pl-11 !rounded-2xl border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01] text-base focus:border-[#49c5b6]/50 transition-all duration-300"
                   />
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-2.5">
                   <div className="flex justify-between items-center px-3">
-                    <label className="font-mono text-[8px] uppercase tracking-[0.3em] text-slate-400 dark:text-white/35 font-bold">
+                    <label className="font-mono text-xs uppercase tracking-[0.15em] text-slate-500 dark:text-white/45 font-bold">
                       Password Code
                     </label>
-                    <a href="#" className="font-mono text-[8px] uppercase tracking-[0.2em] text-slate-400/70 dark:text-white/20 hover:text-[#49c5b6] dark:hover:text-[#49c5b6] transition-colors">
+                    <a href="#" className="font-mono text-xs uppercase tracking-[0.1em] text-slate-400 dark:text-white/30 hover:text-[#49c5b6] dark:hover:text-[#49c5b6] transition-colors font-bold">
                       Forgot?
                     </a>
                   </div>
@@ -114,7 +114,7 @@ export const Login = () => {
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     required
                     icon={Lock}
-                    className="!py-3 !pl-11 !rounded-xl border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01] text-sm focus:border-[#49c5b6]/50 transition-all duration-300"
+                    className="!py-3.5 !pl-11 !rounded-2xl border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01] text-base focus:border-[#49c5b6]/50 transition-all duration-300"
                   />
                 </div>
 
@@ -124,7 +124,7 @@ export const Login = () => {
                       initial={{ opacity: 0, scale: 0.96 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0 }}
-                      className="bg-rose-500/5 border border-rose-500/15 text-rose-500 px-4 py-2.5 rounded-xl font-mono text-[9px] uppercase tracking-widest text-center"
+                      className="bg-rose-500/5 border border-rose-500/15 text-rose-500 px-4 py-3 rounded-xl font-mono text-xs uppercase tracking-wider text-center font-bold"
                     >
                       {error}
                     </motion.div>
@@ -133,28 +133,28 @@ export const Login = () => {
 
                 <button
                   type="submit"
-                  className="btn-apple h-12 w-full text-[10px] font-bold uppercase tracking-widest group rounded-xl bg-[#49c5b6] dark:bg-[#49c5b6] text-white hover:shadow-[#49c5b6]/20 transition-all duration-300"
+                  className="btn-apple h-13 w-full text-sm font-bold uppercase tracking-widest group rounded-2xl bg-[#49c5b6] dark:bg-[#49c5b6] text-white hover:shadow-[#49c5b6]/20 transition-all duration-300"
                   disabled={loading}
                 >
                   {loading ? (
-                    <span className="flex items-center justify-center gap-2">
-                      <Loader2 className="w-3.5 h-3.5 animate-spin" /> Signing In…
+                    <span className="flex items-center justify-center gap-2 text-sm">
+                      <Loader2 className="w-4 h-4 animate-spin" /> Signing In…
                     </span>
                   ) : (
-                    <span className="flex items-center justify-center gap-2">
-                      Sign In <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                    <span className="flex items-center justify-center gap-2 text-sm">
+                      Sign In <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                     </span>
                   )}
                 </button>
               </form>
 
               {/* Footer */}
-              <div className="mt-6 text-center border-t border-slate-200 dark:border-white/[0.04] pt-6">
-                <p className="font-mono text-[7px] uppercase tracking-[0.3em] text-slate-400 dark:text-white/20 mb-3">
+              <div className="mt-8 text-center border-t border-slate-200 dark:border-white/[0.04] pt-8">
+                <p className="font-mono text-xs uppercase tracking-[0.15em] text-slate-400 dark:text-white/30 mb-4 font-bold">
                   No account?
                 </p>
                 <Link to="/register">
-                  <button className="btn-apple-secondary h-10 w-full text-[9px] font-bold tracking-widest uppercase rounded-xl hover:border-[#49c5b6]/40 transition-colors">
+                  <button className="btn-apple-secondary h-11 w-full text-xs font-bold tracking-wider uppercase rounded-xl hover:border-[#49c5b6]/40 transition-colors">
                     Create Account
                   </button>
                 </Link>
