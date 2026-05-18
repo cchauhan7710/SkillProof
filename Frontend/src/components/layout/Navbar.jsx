@@ -55,15 +55,15 @@ export const Navbar = () => {
         </Link>
 
         {/* Narrow Floating Navbar Capsule (aligned to the right) */}
-        <div className="w-full md:max-w-[480px] ml-auto mr-0 px-4 md:px-0 flex justify-end">
-          <div className={`relative flex items-center justify-between px-4 py-2.5 rounded-full transition-all duration-700 w-full ${
+        <div className="ml-auto mr-0 px-4 md:px-0 flex justify-end">
+          <div className={`relative flex items-center px-4 py-2 rounded-full transition-all duration-700 ${
             isScrolled
               ? 'bg-white border border-slate-200 dark:bg-slate-950 dark:border-[#49c5b6]/40 shadow-[0_8px_30px_rgba(73,197,182,0.3)]'
               : 'bg-white border border-slate-100 dark:bg-gradient-to-r dark:from-[#0d1e1c] dark:to-[#081312] dark:border-[#49c5b6]/35 shadow-[0_4px_25px_rgba(73,197,182,0.18)]'
           }`}>
             {/* Desktop Nav */}
-            <div className="hidden md:flex items-center space-x-1 w-full justify-between">
-              <div className="flex items-center space-x-1 mr-2 pr-2 border-r border-slate-200 dark:border-white/15">
+            <div className="hidden md:flex items-center space-x-4">
+              <div className="flex items-center space-x-1 pr-3 border-r border-slate-200 dark:border-white/15">
                 {user && navLinks.map((link) => (
                   <Link
                     key={link.name}
@@ -112,9 +112,9 @@ export const Navbar = () => {
                   >
                     {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
                   </button>
-                  <Link to="/login" className="text-[10px] font-extrabold text-slate-700 dark:text-slate-200 hover:text-[#49c5b6] dark:hover:text-[#49c5b6] transition-colors uppercase tracking-wider px-2.5">Log In</Link>
+                  <Link to="/login" className="text-[10px] font-extrabold text-slate-700 dark:text-slate-200 hover:text-[#49c5b6] dark:hover:text-[#49c5b6] transition-colors uppercase tracking-wider px-2">Log In</Link>
                   <Link to="/register">
-                    <button className="btn-apple bg-slate-900 dark:bg-white text-white dark:text-black !py-1.5 !px-4 !text-[10px] !font-extrabold shadow-none !tracking-wider">Sign Up</button>
+                    <button className="btn-apple bg-slate-900 dark:bg-white text-white dark:text-black !py-1.5 !px-3.5 !text-[10px] !font-extrabold shadow-none !tracking-wider">Sign Up</button>
                   </Link>
                 </div>
               )}
