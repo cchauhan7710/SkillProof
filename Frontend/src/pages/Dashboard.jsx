@@ -605,12 +605,7 @@ export const Dashboard = () => {
   ];
 
   return (
-    <div className="relative min-h-screen bg-slate-50 dark:bg-[#050505] transition-colors duration-500 text-slate-900 dark:text-white antialiased font-sans selection:bg-primary-500/30 selection:text-white pb-20 overflow-hidden">
-      {/* Colorful Background Elements */}
-      <div className="absolute inset-0 bg-dot-grid opacity-[0.03] pointer-events-none" />
-      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-purple-600/20 dark:bg-purple-600/25 blur-[120px] pointer-events-none mix-blend-screen" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-600/20 dark:bg-emerald-600/25 blur-[120px] pointer-events-none mix-blend-screen" />
-      <div className="absolute top-[30%] right-[10%] w-[40%] h-[40%] rounded-full bg-blue-600/20 dark:bg-blue-600/20 blur-[100px] pointer-events-none mix-blend-screen" />
+    <div className="min-h-screen bg-slate-50 dark:bg-black transition-colors duration-500 text-slate-900 dark:text-white antialiased font-sans selection:bg-primary-500/30 selection:text-white pb-20">
       
       <Navbar />
 
@@ -628,7 +623,7 @@ export const Dashboard = () => {
               <div className="w-1.5 h-1.5 rounded-full bg-secondary-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
               <span className="text-[10px] font-bold text-secondary-400 tracking-wider uppercase">System Active</span>
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 mb-3 leading-tight pb-2">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-3 leading-tight">
               Dashboard
             </h1>
             <p className="text-slate-500 dark:text-slate-300 dark:text-white/50 text-base sm:text-lg">

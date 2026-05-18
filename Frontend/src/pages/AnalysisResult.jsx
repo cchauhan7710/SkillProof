@@ -177,14 +177,12 @@ export const AnalysisResult = () => {
   }));
 
   return (
-    <div className="relative min-h-full bg-slate-50 dark:bg-[#050505] transition-colors duration-500 pt-20 sm:pt-28 md:pt-32 pb-20 md:pb-32 overflow-hidden">
+    <div className="relative min-h-full bg-slate-50 dark:bg-black transition-colors duration-500 pt-20 sm:pt-28 md:pt-32 pb-20 md:pb-32">
       <div className="absolute inset-0 bg-dot-grid opacity-[0.03] pointer-events-none" />
-      
-      {/* Colorful Background Elements */}
-      <div className="absolute top-[0%] left-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-600/20 dark:bg-indigo-600/25 blur-[120px] pointer-events-none mix-blend-screen" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-rose-600/20 dark:bg-rose-600/25 blur-[120px] pointer-events-none mix-blend-screen" />
-      <div className="absolute top-[40%] left-[20%] w-[40%] h-[40%] rounded-full bg-amber-600/20 dark:bg-amber-600/20 blur-[100px] pointer-events-none mix-blend-screen" />
-
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse, rgba(73,197,182,0.07) 0%, transparent 65%)' }}
+      />
       <Navbar />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
@@ -199,7 +197,7 @@ export const AnalysisResult = () => {
               <div className="w-1.5 h-1.5 bg-[#49c5b6] rounded-full animate-pulse shadow-[0_0_8px_rgba(73,197,182,0.6)]" />
               <span className="text-[9px] md:text-[10px] font-mono tracking-widest uppercase font-bold">Verified Registry Port</span>
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-editorial font-normal italic tracking-normal leading-tight md:leading-none text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-emerald-400 to-green-500 mb-2 md:mb-4 pb-2 drop-shadow-sm">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-editorial font-normal italic tracking-normal leading-tight md:leading-none text-slate-900 dark:text-white mb-2 md:mb-4">
               {candidateName || 'Core Build'}
             </h1>
           </div>
@@ -326,85 +324,79 @@ export const AnalysisResult = () => {
 
                {/* Bento Grid Verification Heatmap */}
                <div>
-                  <h4 className="tech-mono text-slate-500 dark:text-white/40 !text-[8px] md:!text-[9px] mb-6 md:mb-8 uppercase tracking-[0.4em]">Verification Heatmap</h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+                  <h4 className="tech-mono text-slate-500 dark:text-white/40 !text-[8px] md:!text-[9px] mb-6 md:mb-8 uppercase tracking-[0.4em]">Verification Heatma                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
                      {skillVerification?.map((item, idx) => {
                         // Use LLM accuracy_score if available, else invert fakeSkillRisk
                         const displayScore = item.accuracyScore !== null && item.accuracyScore !== undefined
                           ? item.accuracyScore
                           : (item.fakeSkillRisk?.score === 0 ? 100 : 100 - (item.fakeSkillRisk?.score || 0));
 
-                        let verdict = item.verdict || 'Unverified';
+                        // 1. Determine status label based on actual mechanical verification status from GitHub
+                        const isVerified = item.github && (item.github.status === 'Verified' || item.github.loc > 0 || item.github.commits > 0);
+                        const statusLabel = isVerified ? 'Verified' : 'Unverified';
+                        const statusColorClass = isVerified ? 'text-emerald-500 dark:text-emerald-400' : 'text-slate-500 dark:text-white/40';
+                        const statusDotClass = isVerified ? 'bg-emerald-500' : 'bg-slate-400';
 
-                        // Dynamic fallback classification if the LLM verdict is missing or "Unverified"
-                        if (verdict === 'Unverified') {
-                          const hasEvidence = item.github && (item.github.commits > 0 || item.github.loc > 0 || item.github.status === 'Verified');
-                          if (hasEvidence) {
-                            if (displayScore >= 75) verdict = 'Proven';
-                            else if (displayScore >= 40) verdict = 'Plausible';
-                            else verdict = 'Overstated';
-                          } else {
-                            if (item.resumeConfidence === 'High') {
-                              verdict = 'Overstated';
-                            } else {
-                              verdict = 'Unverified';
-                            }
-                          }
+                        // 2. Color progress bar & score badge based purely on score values
+                        let barColorClass = '';
+                        let scoreColorClass = '';
+                        if (displayScore >= 75) {
+                          barColorClass = 'bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.4)]';
+                          scoreColorClass = 'text-emerald-500 dark:text-emerald-400';
+                        } else if (displayScore >= 45) {
+                          barColorClass = 'bg-amber-500 shadow-[0_0_12px_rgba(245,158,11,0.4)]';
+                          scoreColorClass = 'text-amber-500 dark:text-amber-400';
+                        } else {
+                          barColorClass = 'bg-rose-500 shadow-[0_0_12px_rgba(244,63,94,0.4)]';
+                          scoreColorClass = 'text-rose-500 dark:text-rose-400';
                         }
 
-                        // Colour scheme by verdict
-                        const verdictConfig = {
-                          'Proven':     { text: 'text-emerald-500 dark:text-emerald-400', bar: 'bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.4)]', dot: 'bg-emerald-500', label: 'Proven' },
-                          'Plausible':  { text: 'text-amber-500 dark:text-amber-400',    bar: 'bg-amber-500 shadow-[0_0_12px_rgba(245,158,11,0.4)]',   dot: 'bg-amber-500',   label: 'Plausible' },
-                          'Overstated': { text: 'text-rose-600 dark:text-rose-500',       bar: 'bg-rose-500 shadow-[0_0_12px_rgba(244,63,94,0.4)]',    dot: 'bg-rose-500',    label: 'Overstated' },
-                          'Unverified': { text: 'text-slate-500 dark:text-white/40',      bar: 'bg-slate-400',                                          dot: 'bg-slate-400',   label: 'Unverified' },
-                        };
-                        const vc = verdictConfig[verdict] || verdictConfig['Unverified'];
-                        
                         return (
-                          <div key={idx} className="bg-slate-50 dark:bg-white/[0.02] border border-slate-200/60 dark:border-white/[0.04] p-4 sm:p-5 rounded-2xl md:rounded-[1.5rem] hover:shadow-lg dark:hover:bg-white/[0.04] transition-all duration-300 overflow-hidden">
+                          <div key={idx} className="bg-slate-50 dark:bg-white/[0.02] border border-slate-200/60 dark:border-white/[0.04] p-4 sm:p-5 rounded-2xl md:rounded-[1.5rem] hover:shadow-lg dark:hover:bg-white/[0.04] transition-all duration-300 overflow-hidden flex flex-col justify-between">
                             
-                            <div className="flex justify-between items-start mb-3 md:mb-4 w-full">
-                              <div className="flex-1 min-w-0 pr-2">
-                                <span className="text-base md:text-lg font-display font-semibold tracking-tight text-slate-900 dark:text-white truncate block capitalize">{item.name}</span>
-                                <div className="mt-1 md:mt-1.5 flex items-center space-x-2">
-                                  <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${vc.dot}`} />
-                                  <p className={`tech-mono !text-[8px] md:!text-[9px] uppercase tracking-widest truncate font-bold ${vc.text}`}>
-                                      {vc.label}
-                                  </p>
+                            <div>
+                              <div className="flex justify-between items-start mb-3 md:mb-4 w-full">
+                                <div className="flex-1 min-w-0 pr-2">
+                                  <span className="text-base md:text-lg font-display font-semibold tracking-tight text-slate-900 dark:text-white truncate block capitalize">{item.name}</span>
+                                  <div className="mt-1 md:mt-1.5 flex items-center space-x-2">
+                                    <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${statusDotClass}`} />
+                                    <p className={`tech-mono !text-[8px] md:!text-[9px] uppercase tracking-widest truncate font-bold ${statusColorClass}`}>
+                                        {statusLabel}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="flex-shrink-0 bg-white dark:bg-black/40 border border-slate-200 dark:border-white/10 px-2 py-1 rounded-lg shadow-sm text-center">
+                                  <span className={`text-sm md:text-base font-display font-black italic tabular-nums leading-none ${scoreColorClass}`}>
+                                    {displayScore}<span className="text-slate-400 dark:text-white/30 font-mono text-[8px] md:text-[9px] ml-0.5">%</span>
+                                  </span>
                                 </div>
                               </div>
-                              <div className="flex-shrink-0 bg-white dark:bg-black/40 border border-slate-200 dark:border-white/10 px-2 py-1 rounded-lg shadow-sm text-center">
-                                <span className={`text-sm md:text-base font-display font-black italic tabular-nums leading-none ${vc.text}`}>
-                                  {displayScore}<span className="text-slate-400 dark:text-white/30 font-mono text-[8px] md:text-[9px] ml-0.5">%</span>
-                                </span>
+
+                              <div className="flex flex-wrap gap-2 md:gap-3 mb-3 md:mb-4 border-t border-slate-200/60 dark:border-white/5 pt-3 md:pt-4">
+                                 <div className="flex items-center space-x-2 bg-white dark:bg-white/5 px-2 md:px-2.5 py-1 md:py-1.5 rounded-lg border border-slate-100 dark:border-transparent min-w-0">
+                                    <Terminal size={10} className="text-slate-500 flex-shrink-0" />
+                                    <span className="tech-mono !text-[8px] md:!text-[9px] uppercase font-bold text-slate-600 dark:text-white/60 truncate">{item.github?.loc?.toLocaleString() || 0} LOC</span>
+                                  </div>
+                                  <div className="flex items-center space-x-2 bg-white dark:bg-white/5 px-2 md:px-2.5 py-1 md:py-1.5 rounded-lg border border-slate-100 dark:border-transparent min-w-0">
+                                    <GitCommit size={10} className="text-slate-500 flex-shrink-0" />
+                                    <span className="tech-mono !text-[8px] md:!text-[9px] uppercase font-bold text-slate-600 dark:text-white/60 truncate">{item.github?.commits || 0} CME</span>
+                                  </div>
                               </div>
+
+                              {/* LLM Reasoning tooltip */}
+                              {item.reasoning && (
+                                <p className="text-[11px] md:text-xs text-slate-600 dark:text-white/50 leading-relaxed mb-3 italic border-l-2 border-slate-200 dark:border-white/10 pl-2">
+                                  {item.reasoning}
+                                </p>
+                              )}
                             </div>
 
-                            <div className="flex flex-wrap gap-2 md:gap-3 mb-3 md:mb-4 border-t border-slate-200/60 dark:border-white/5 pt-3 md:pt-4">
-                               <div className="flex items-center space-x-2 bg-white dark:bg-white/5 px-2 md:px-2.5 py-1 md:py-1.5 rounded-lg border border-slate-100 dark:border-transparent min-w-0">
-                                  <Terminal size={10} className="text-slate-500 flex-shrink-0" />
-                                  <span className="tech-mono !text-[8px] md:!text-[9px] uppercase font-bold text-slate-600 dark:text-white/60 truncate">{item.github?.loc?.toLocaleString() || 0} LOC</span>
-                                </div>
-                               <div className="flex items-center space-x-2 bg-white dark:bg-white/5 px-2 md:px-2.5 py-1 md:py-1.5 rounded-lg border border-slate-100 dark:border-transparent min-w-0">
-                                  <GitCommit size={10} className="text-slate-500 flex-shrink-0" />
-                                  <span className="tech-mono !text-[8px] md:!text-[9px] uppercase font-bold text-slate-600 dark:text-white/60 truncate">{item.github?.commits || 0} CME</span>
-                                </div>
-                            </div>
-
-                            {/* LLM Reasoning tooltip */}
-                            {item.reasoning && (
-                              <p className="text-[11px] md:text-xs text-slate-600 dark:text-white/50 leading-relaxed mb-3 italic border-l-2 border-slate-200 dark:border-white/10 pl-2">
-                                {item.reasoning}
-                              </p>
-                            )}
-
-                            <div className="w-full h-1.5 bg-slate-200 dark:bg-white/[0.05] rounded-full overflow-hidden mt-auto">
+                            <div className="w-full h-1.5 bg-slate-200 dark:bg-white/[0.05] rounded-full overflow-hidden mt-4">
                               <motion.div 
                                 initial={{ width: 0 }}
                                 animate={{ width: `${Math.max(0, Math.min(100, displayScore))}%` }}
                                 transition={{ duration: 1.5, delay: idx * 0.1, ease: "easeOut" }}
-                                className={`h-full ${vc.bar}`} 
+                                className={`h-full ${barColorClass}`} 
                               />
                             </div>
 
@@ -543,7 +535,7 @@ export const AnalysisResult = () => {
                  <div className="flex flex-col gap-4 md:gap-6 items-start flex-shrink-0">
                     <Target className="w-10 h-10 md:w-12 md:h-12 text-primary-500" />
                     <div>
-                      <h2 className="text-4xl md:text-6xl font-editorial font-normal italic tracking-normal leading-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-rose-400 mb-2 md:mb-3 pb-2 drop-shadow-sm">Strategic <span className="text-primary-500">Insight.</span></h2>
+                      <h2 className="text-4xl md:text-6xl font-editorial font-normal italic tracking-normal leading-tight text-white mb-2 md:mb-3">Strategic <span className="text-primary-500">Insight.</span></h2>
                       <p className="tech-mono text-white/50 !text-[8px] md:!text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em]">Growth pathways established and mapped</p>
                     </div>
                  </div>
