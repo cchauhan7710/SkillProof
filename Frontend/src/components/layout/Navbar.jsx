@@ -68,7 +68,7 @@ export const Navbar = () => {
                   to={link.path}
                   className={`px-4 py-1.5 rounded-full text-[10px] font-display font-bold uppercase tracking-widest transition-all duration-500 ${
                     isActive(link.path) 
-                      ? 'bg-slate-900 dark:bg-white text-white dark:text-black' 
+                      ? 'bg-[#49c5b6] text-white shadow-lg shadow-[#49c5b6]/20' 
                       : 'text-slate-500 dark:text-white/30 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >

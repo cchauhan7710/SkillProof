@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Navbar } from '../components/layout/Navbar';
+import { Footer } from '../components/layout/Footer';
 import { Github, BarChart3, ShieldCheck, Zap, Cpu, Layout, ArrowRight, Terminal, FileText, Activity, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -313,56 +314,6 @@ const CTA = () => (
     </div>
   </section>
 );
-
-/* ════════════════════════════
-   FOOTER
-════════════════════════════ */
-const Footer = () => (
-  <footer className="py-24 border-t border-slate-200 dark:border-white/[0.04] bg-slate-100/50 dark:bg-[#050505]">
-    <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-16">
-      <div className="md:col-span-1">
-        <div className="flex items-center mb-6">
-          <img src="/logo.png" alt="SkillProof" className="h-10 w-auto object-contain" />
-        </div>
-        <p className="font-mono text-[9px] uppercase tracking-[0.3em] text-slate-400 dark:text-white/25 leading-relaxed">
-          Unified Registry Platform. <br />Neural Intelligence Engine.
-        </p>
-      </div>
-
-      <div className="md:col-span-3 grid grid-cols-2 lg:grid-cols-3 gap-12">
-        {[
-          { title: 'Protocol', links: ['Extraction', 'Verification', 'Identity'] },
-          { title: 'Network',  links: ['About', 'Engineers', 'Security'] },
-          { title: 'Support',  links: ['Docs', 'API', 'Status'] },
-        ].map((col, i) => (
-          <div key={i} className="space-y-6">
-            <h4 className="font-mono text-[8px] uppercase tracking-[0.45em] text-slate-400 dark:text-white/20">
-              {col.title}
-            </h4>
-            <ul className="space-y-3">
-              {col.links.map((link, j) => (
-                <li key={j}>
-                  <a
-                    href="#"
-                    className="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-white/30 hover:text-slate-900 dark:hover:text-white transition-colors"
-                  >
-                    {link}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-    </div>
-
-    <div className="max-w-7xl mx-auto px-6 mt-20 pt-8 border-t border-slate-200 dark:border-white/[0.04] flex flex-col sm:flex-row gap-4 sm:gap-2 justify-between items-center text-[9px] font-mono uppercase tracking-[0.35em] text-slate-400 dark:text-white/15">
-      <span>© 2026 Neural Registry</span>
-      <span>Build v1.4.0</span>
-    </div>
-  </footer>
-);
-
 /* ════════════════════════════
    PAGE EXPORT
 ════════════════════════════ */

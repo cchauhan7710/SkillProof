@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '../components/ui';
 import { Navbar } from '../components/layout/Navbar';
+import { Footer } from '../components/layout/Footer';
 import { User, Lock, Mail, ArrowRight, Loader2, Camera, Type } from 'lucide-react';
 
 export const Register = () => {
@@ -46,56 +47,62 @@ export const Register = () => {
   };
 
   return (
-    /* ── Full-screen, no scroll ── */
-    <div className="relative min-h-full bg-slate-50 dark:bg-[#080808] flex flex-col selection:bg-amber-400/25">
-
-      {/* ── Background ── */}
+    <div className="relative min-h-screen bg-slate-50 dark:bg-black flex flex-col selection:bg-[#49c5b6]/20 transition-colors duration-500 overflow-x-hidden">
+      {/* ── Background atmosphere ── */}
       <div className="absolute inset-0 bg-dot-grid opacity-[0.03] pointer-events-none" />
-      <div
-        className="absolute top-0 left-1/4 w-[500px] h-[400px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse, rgba(16,185,129,0.07) 0%, transparent 65%)' }}
+      
+      {/* Interactive animated gradient orbs */}
+      <motion.div
+        animate={{ opacity: [0.12, 0.22, 0.12], scale: [1, 1.06, 1], y: [0, -15, 0] }}
+        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute top-[-10%] left-1/4 w-[600px] h-[600px] rounded-full pointer-events-none filter blur-[120px] z-0"
+        style={{ background: 'radial-gradient(circle, rgba(73,197,182,0.16) 0%, transparent 70%)' }}
+      />
+      <motion.div
+        animate={{ opacity: [0.15, 0.25, 0.15], scale: [1, 1.04, 1], x: [0, 20, 0] }}
+        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2.5 }}
+        className="absolute bottom-[10%] right-1/4 w-[500px] h-[500px] rounded-full pointer-events-none filter blur-[100px] z-0"
+        style={{ background: 'radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%)' }}
       />
 
       <Navbar />
 
       {/* ── Centered card ── */}
-      <div className="flex-1 flex items-center justify-center px-4 min-h-screen">
+      <div className="flex-1 flex items-center justify-center px-4 py-28 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20, scale: 0.99 }}
+          initial={{ opacity: 0, y: 30, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="w-full max-w-2xl"
         >
-          {/* Card */}
-          <div className="relative rounded-[2rem] overflow-hidden shadow-2xl">
-            <div className="absolute inset-0 bg-white/80 dark:bg-white/[0.03] backdrop-blur-3xl border border-slate-200 dark:border-white/[0.07]" />
-            <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/70 dark:via-white/10 to-transparent" />
+          {/* Card Wrapper with glowing border */}
+          <div className="relative rounded-[2.2rem] overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.15)] dark:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.6)] group border border-slate-200/50 dark:border-white/[0.06] bg-white/70 dark:bg-white/[0.02] backdrop-blur-2xl transition-all duration-500 hover:border-[#49c5b6]/30">
+            {/* Top gradient edge */}
+            <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#49c5b6]/80 to-transparent opacity-70 group-hover:opacity-100 transition-opacity" />
 
-            <div className="relative z-10 px-8 py-6">
-
+            <div className="relative z-10 px-8 sm:px-10 py-10">
               {/* Header */}
-              <div className="text-center mb-5">
-                <h1 className="font-display font-bold text-2xl tracking-tight text-slate-900 dark:text-white">
-                  Create <span className="text-slate-400 dark:text-white/20 font-light italic">account.</span>
+              <div className="text-center mb-6">
+                <h1 className="font-display font-black text-2xl sm:text-3xl tracking-tight text-slate-900 dark:text-white">
+                  Create <span className="text-[#49c5b6] italic font-normal">account.</span>
                 </h1>
-                <p className="font-mono text-[8px] uppercase tracking-[0.4em] text-slate-400 dark:text-white/25 mt-1">
+                <p className="font-mono text-[8px] uppercase tracking-[0.4em] text-slate-400 dark:text-white/25 mt-1.5">
                   New Identity Mapping
                 </p>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-3.5">
-
-                {/* ── Avatar Upload (inline, compact) ── */}
-                <div className="flex items-center gap-4">
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {/* ── Avatar Upload ── */}
+                <div className="flex items-center gap-5 bg-slate-50/50 dark:bg-white/[0.01] p-4 rounded-2xl border border-slate-200/40 dark:border-white/[0.04]">
                   <motion.div
                     whileHover={{ scale: 1.04 }}
                     onClick={() => fileInputRef.current.click()}
-                    className="relative flex-shrink-0 w-16 h-16 rounded-xl cursor-pointer border border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.02] flex items-center justify-center overflow-hidden shadow transition-all hover:border-amber-500/40 group"
+                    className="relative flex-shrink-0 w-16 h-16 rounded-xl cursor-pointer border border-slate-200 dark:border-white/[0.08] bg-slate-100 dark:bg-white/[0.02] flex items-center justify-center overflow-hidden shadow transition-all hover:border-[#49c5b6]/40 group"
                   >
                     {avatarPreview ? (
                       <img src={avatarPreview} alt="Avatar" className="w-full h-full object-cover" />
                     ) : (
-                      <div className="flex flex-col items-center gap-1 text-slate-300 dark:text-white/20 group-hover:text-amber-500 transition-colors">
+                      <div className="flex flex-col items-center gap-1 text-slate-400 dark:text-white/35 group-hover:text-[#49c5b6] transition-colors">
                         <Camera size={18} />
                         <span className="font-mono text-[7px] uppercase tracking-wider">Upload</span>
                       </div>
@@ -106,7 +113,7 @@ export const Register = () => {
                   </motion.div>
                   <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/*" className="hidden" />
                   <div>
-                    <p className="font-mono text-[8px] uppercase tracking-[0.25em] text-slate-500 dark:text-white/30 font-medium">
+                    <p className="font-mono text-[8px] uppercase tracking-[0.25em] text-slate-500 dark:text-white/35 font-bold">
                       Profile Avatar
                     </p>
                     <p className="font-mono text-[7px] uppercase tracking-wider text-slate-400 dark:text-white/20 mt-1">
@@ -116,9 +123,9 @@ export const Register = () => {
                 </div>
 
                 {/* ── Name + Handle (2-col) ── */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-1">
-                    <label className="font-mono text-[8px] pl-3 uppercase tracking-[0.25em] text-slate-400 dark:text-white/25">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="font-mono text-[8px] pl-3 uppercase tracking-[0.25em] text-slate-400 dark:text-white/35 font-bold">
                       Full Name
                     </label>
                     <Input
@@ -128,11 +135,11 @@ export const Register = () => {
                       onChange={(e) => setFormData({ ...formData, fullname: e.target.value })}
                       required
                       icon={Type}
-                      className="!py-2.5 !pl-11 !rounded-xl border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01] text-sm"
+                      className="!py-3 !pl-11 !rounded-xl border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01] text-sm focus:border-[#49c5b6]/50 transition-all duration-300"
                     />
                   </div>
-                  <div className="space-y-1">
-                    <label className="font-mono text-[8px] pl-3 uppercase tracking-[0.25em] text-slate-400 dark:text-white/25">
+                  <div className="space-y-2">
+                    <label className="font-mono text-[8px] pl-3 uppercase tracking-[0.25em] text-slate-400 dark:text-white/35 font-bold">
                       Handle
                     </label>
                     <Input
@@ -142,15 +149,15 @@ export const Register = () => {
                       onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                       required
                       icon={User}
-                      className="!py-2.5 !pl-11 !rounded-xl border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01] text-sm"
+                      className="!py-3 !pl-11 !rounded-xl border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01] text-sm focus:border-[#49c5b6]/50 transition-all duration-300"
                     />
                   </div>
                 </div>
 
                 {/* ── Email ── */}
-                <div className="space-y-1">
-                  <label className="font-mono text-[8px] pl-3 uppercase tracking-[0.25em] text-slate-400 dark:text-white/25">
-                    Email
+                <div className="space-y-2">
+                  <label className="font-mono text-[8px] pl-3 uppercase tracking-[0.25em] text-slate-400 dark:text-white/35 font-bold">
+                    Email Identity
                   </label>
                   <Input
                     type="email"
@@ -159,14 +166,14 @@ export const Register = () => {
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
                     icon={Mail}
-                    className="!py-2.5 !pl-11 !rounded-xl border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01] text-sm"
+                    className="!py-3 !pl-11 !rounded-xl border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01] text-sm focus:border-[#49c5b6]/50 transition-all duration-300"
                   />
                 </div>
 
                 {/* ── Password ── */}
-                <div className="space-y-1">
-                  <label className="font-mono text-[8px] pl-3 uppercase tracking-[0.25em] text-slate-400 dark:text-white/25">
-                    Password
+                <div className="space-y-2">
+                  <label className="font-mono text-[8px] pl-3 uppercase tracking-[0.25em] text-slate-400 dark:text-white/35 font-bold">
+                    Password Code
                   </label>
                   <Input
                     type="password"
@@ -175,7 +182,7 @@ export const Register = () => {
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     required
                     icon={Lock}
-                    className="!py-2.5 !pl-11 !rounded-xl border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01] text-sm"
+                    className="!py-3 !pl-11 !rounded-xl border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01] text-sm focus:border-[#49c5b6]/50 transition-all duration-300"
                   />
                 </div>
 
@@ -186,7 +193,7 @@ export const Register = () => {
                       initial={{ opacity: 0, scale: 0.96 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0 }}
-                      className="bg-red-500/5 border border-red-500/15 text-red-500/80 px-4 py-2 rounded-xl font-mono text-[9px] uppercase tracking-widest text-center"
+                      className="bg-rose-500/5 border border-rose-500/15 text-rose-500 px-4 py-2 rounded-xl font-mono text-[9px] uppercase tracking-widest text-center"
                     >
                       {error}
                     </motion.div>
@@ -195,7 +202,7 @@ export const Register = () => {
 
                 <button
                   type="submit"
-                  className="btn-apple h-11 w-full text-[10px] font-bold uppercase tracking-widest group"
+                  className="btn-apple h-12 w-full text-[10px] font-bold uppercase tracking-widest group rounded-xl bg-[#49c5b6] dark:bg-[#49c5b6] text-white hover:shadow-[#49c5b6]/20 transition-all duration-300"
                   disabled={loading}
                 >
                   {loading ? (
@@ -211,21 +218,22 @@ export const Register = () => {
               </form>
 
               {/* Footer */}
-              <div className="mt-4 text-center border-t border-slate-200 dark:border-white/[0.04] pt-4">
+              <div className="mt-6 text-center border-t border-slate-200 dark:border-white/[0.04] pt-6">
                 <p className="font-mono text-[7px] uppercase tracking-[0.3em] text-slate-400 dark:text-white/20 mb-3">
                   Already registered?
                 </p>
                 <Link to="/login">
-                  <button className="btn-apple-secondary h-9 w-full text-[9px] font-bold tracking-widest uppercase">
+                  <button className="btn-apple-secondary h-10 w-full text-[9px] font-bold tracking-widest uppercase rounded-xl hover:border-[#49c5b6]/40 transition-colors">
                     Sign In
                   </button>
                 </Link>
               </div>
-
             </div>
           </div>
         </motion.div>
       </div>
+
+      <Footer />
     </div>
   );
 };
