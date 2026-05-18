@@ -47,8 +47,8 @@ export const Navbar = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className={`relative flex items-center justify-between px-6 py-3 rounded-full transition-all duration-700 ${
           isScrolled
-            ? 'bg-white/85 dark:bg-slate-950/90 backdrop-blur-2xl border border-slate-200/50 dark:border-white/15 shadow-2xl'
-            : 'bg-white/60 dark:bg-white/[0.03] backdrop-blur-xl border border-slate-200/30 dark:border-white/10 shadow-lg'
+            ? 'bg-white/90 dark:bg-[#0b1c1a]/95 backdrop-blur-2xl border border-[#49c5b6]/40 dark:border-[#49c5b6]/30 shadow-[0_8px_32px_0_rgba(73,197,182,0.25)]'
+            : 'bg-[#49c5b6]/10 dark:bg-[#49c5b6]/5 backdrop-blur-xl border border-[#49c5b6]/30 dark:border-[#49c5b6]/20 shadow-[0_8px_32px_0_rgba(73,197,182,0.15)]'
         }`}>
           {/* Logo */}
           <Link to="/" className="flex items-center group">
