@@ -42,13 +42,13 @@ export const Navbar = () => {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
-      isScrolled ? 'py-4' : 'py-6'
+      isScrolled ? 'py-4' : 'py-5'
     }`}>
       <div className="max-w-7xl mx-auto px-6">
-        <div className={`relative flex items-center justify-between px-6 py-2.5 rounded-full transition-all duration-700 ${
+        <div className={`relative flex items-center justify-between px-6 py-3 rounded-full transition-all duration-700 ${
           isScrolled
-            ? 'bg-white/80 dark:bg-slate-950/70 backdrop-blur-xl border border-slate-200/40 dark:border-white/10 shadow-2xl'
-            : 'bg-white/50 dark:bg-slate-950/40 backdrop-blur-md border border-transparent'
+            ? 'bg-white/85 dark:bg-slate-950/90 backdrop-blur-2xl border border-slate-200/50 dark:border-white/15 shadow-2xl'
+            : 'bg-white/60 dark:bg-white/[0.03] backdrop-blur-xl border border-slate-200/30 dark:border-white/10 shadow-lg'
         }`}>
           {/* Logo */}
           <Link to="/" className="flex items-center group">
